@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Drawing;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace LogisticProgram
 {
@@ -66,40 +67,20 @@ namespace LogisticProgram
         {
             panelRight.Height = buttonTransport.Height;
             panelRight.Top = buttonTransport.Top;
-            foreach (Control pn in this.Controls)
-            {
-                if (Convert.ToString(pn.Tag) == "data")
-                {
-                    pn.Visible = false;
-                }
-            }
-            panelTransport.Visible = true;
         }
 
         private void buttonDaily_Click(object sender, EventArgs e)
         {
             panelRight.Height = buttonDaily.Height;
             panelRight.Top = buttonDaily.Top;
-            foreach (Control pn in this.Controls)
-            {
-                if (Convert.ToString(pn.Tag) == "data")
-                {
-                    pn.Visible = false;
-                }
-            }
+            //timerDataBases.Enabled = true;
+            timerAnimate.Enabled = true;
         }
 
         private void buttonRegistry_Click(object sender, EventArgs e)
         {
             panelRight.Height = buttonRegistry.Height;
             panelRight.Top = buttonRegistry.Top;
-            foreach (Control pn in this.Controls)
-            {
-                if (Convert.ToString(pn.Tag) == "data")
-                {
-                    pn.Visible = false;
-                }
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -125,7 +106,7 @@ namespace LogisticProgram
                 dataGridViewTransport.Rows[i].Cells[2].Value = el.DateShipping;
                 if (el.DateShipped != "")
                 {
-                    dataGridViewTransport.Rows[i].Cells[3].Value = el.DateShipped; 
+                    dataGridViewTransport.Rows[i].Cells[3].Value = el.DateShipped;
                 }
                 else
                 {
@@ -194,7 +175,7 @@ namespace LogisticProgram
             {
                 while (panelTransport.Left > 0)
                 {
-                    panelTransport.Left -= 1; 
+                    panelTransport.Left -= 1;
                 }
                 timer1.Enabled = false;
             }
@@ -349,18 +330,19 @@ namespace LogisticProgram
         private void buttonMake_Click(object sender, EventArgs e)
         {
             //Check textBoxes
+
             bool check = true;
             if (textBoxNumber.Text == "Гос. номер")
             {
                 panelNumber.BackColor = Color.FromArgb(225, 50, 77);
                 check = false;
             }
-            if (textBoxShipping.Text == "Дата отгрузки")
+            if (textBoxShipping.Text == "Дата отгрузки" || !Regex.IsMatch(textBoxShipping.Text, @"^\d{4}-\d{2}-\d{2}$"))
             {
                 panelShipping.BackColor = Color.FromArgb(225, 50, 77);
                 check = false;
             }
-            if (textBoxShipped.Text == "Дата выгрузки")
+            if (textBoxShipped.Text == "Дата выгрузки" || !Regex.IsMatch(textBoxShipped.Text, @"^\d{4}-\d{2}-\d{2}$"))
             {
                 panelShipped.BackColor = Color.FromArgb(225, 50, 77);
                 check = false;
@@ -391,42 +373,126 @@ namespace LogisticProgram
                 int price = Convert.ToInt32(textBoxPrice.Text);
                 string currency = textBoxCurrency.Text;
 
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO transport VALUES (DEFAULT, '{number}', '{dateShipping}', '{dateShipped}', {weight}, {price}, '{currency}')", conn);
-                command.ExecuteNonQuery();
-                conn.Close();
-
-                LoadInfo();
-
-                int i = 0;
-                dataGridViewTransport.Rows.Clear();
-
-                for (int j = 0; j < transport.Count - 1; j++)
+                if (buttonMake.Text == "Добавить")
                 {
-                    dataGridViewTransport.Rows.Add();
-                }
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO transport VALUES (DEFAULT, '{number}', '{dateShipping}', '{dateShipped}', {weight}, {price}, '{currency}')", conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
 
-                foreach (Transport el in transport)
+                    LoadInfo();
+
+                    int i = 0;
+                    dataGridViewTransport.Rows.Clear();
+
+                    for (int j = 0; j < transport.Count - 1; j++)
+                    {
+                        dataGridViewTransport.Rows.Add();
+                    }
+
+                    foreach (Transport el in transport)
+                    {
+                        dataGridViewTransport.Rows[i].Cells[0].Value = el.Number;
+                        dataGridViewTransport.Rows[i].Cells[1].Value = el.StateNubmer;
+                        dataGridViewTransport.Rows[i].Cells[2].Value = el.DateShipping;
+                        if (el.DateShipped != "")
+                        {
+                            dataGridViewTransport.Rows[i].Cells[3].Value = el.DateShipped;
+                        }
+                        else
+                        {
+                            dataGridViewTransport.Rows[i].Cells[3].Value = "—";
+                        }
+                        dataGridViewTransport.Rows[i].Cells[4].Value = el.Weight;
+                        dataGridViewTransport.Rows[i].Cells[5].Value = $"{el.Price} {el.Currency}";
+                        i++;
+                    }
+
+                    textBoxNumber.Text = "Гос. номер";
+                    textBoxNumber.ForeColor = Color.FromArgb(125, 125, 125);
+                    textBoxNumber.Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+                }
+            }
+        }
+
+        private void textBoxWeight_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 44)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxPrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxCurrency_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxShipping_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 45)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxShipped_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 45)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8 && !Char.IsLetter(ch) && ch != 47 && ch != 32 && ch != 45)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void timerAnimate_Tick(object sender, EventArgs e)
+        {
+            if (dataGridViewShipping.Top != 95)
+            {
+                if (dataGridViewShipping.Top > 95)
                 {
-                    dataGridViewTransport.Rows[i].Cells[0].Value = el.Number;
-                    dataGridViewTransport.Rows[i].Cells[1].Value = el.StateNubmer;
-                    dataGridViewTransport.Rows[i].Cells[2].Value = el.DateShipping;
-                    if (el.DateShipped != "")
-                    {
-                        dataGridViewTransport.Rows[i].Cells[3].Value = el.DateShipped;
-                    }
-                    else
-                    {
-                        dataGridViewTransport.Rows[i].Cells[3].Value = "—";
-                    }
-                    dataGridViewTransport.Rows[i].Cells[4].Value = el.Weight;
-                    dataGridViewTransport.Rows[i].Cells[5].Value = $"{el.Price} {el.Currency}";
-                    i++;
+                    dataGridViewShipping.Top -= 5;
+                    dataGridViewTransport.Top -= 5; 
                 }
-
-                textBoxNumber.Text = "Гос. номер";
-                textBoxNumber.ForeColor = Color.FromArgb(125, 125, 125);
-                textBoxNumber.Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+                else
+                {
+                    dataGridViewShipping.Top += 5;
+                    dataGridViewTransport.Top += 5;
+                }
+            }
+            else
+            {
+                timerAnimate.Enabled = false;
             }
         }
     }
