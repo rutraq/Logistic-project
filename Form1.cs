@@ -15,6 +15,7 @@ namespace LogisticProgram
         List<Transport> transport = new List<Transport>();
         List<Shipping> shipping = new List<Shipping>();
         List<Registry> registry = new List<Registry>();
+        int numberForChange = new int();
         public void LoadInfo()
         {
             transport.Clear();
@@ -116,6 +117,8 @@ namespace LogisticProgram
         {
             panelRight.Height = buttonTransport.Height;
             panelRight.Top = buttonTransport.Top;
+            panelTransportBoxes.Visible = true;
+            panelShippingBoxes.Visible = false;
             timerAnimateTransport.Enabled = true;
         }
 
@@ -123,6 +126,8 @@ namespace LogisticProgram
         {
             panelRight.Height = buttonDaily.Height;
             panelRight.Top = buttonDaily.Top;
+            panelTransportBoxes.Visible = false;
+            panelShippingBoxes.Visible = true;
             timerAnimateShipping.Enabled = true;
         }
 
@@ -221,11 +226,13 @@ namespace LogisticProgram
                 buttonChange.FlatAppearance.BorderSize = 0;
                 buttonAdd.FlatAppearance.BorderSize = 1;
                 buttonMake.Text = "Добавить";
+                TextBoxEnabled(false);
                 timer1.Enabled = true;
             }
             else
             {
                 buttonAdd.FlatAppearance.BorderSize = 0;
+                TextBoxClear();
                 timer2.Enabled = true;
             }
         }
@@ -238,11 +245,14 @@ namespace LogisticProgram
                 buttonChange.FlatAppearance.BorderSize = 0;
                 buttonAdd.FlatAppearance.BorderSize = 0;
                 buttonMake.Text = "Удалить";
+                TextBoxEnabled(true);
                 timer1.Enabled = true;
             }
             else
             {
                 buttonRemove.FlatAppearance.BorderSize = 0;
+                TextBoxClear();
+                TextBoxEnabled(false);
                 timer2.Enabled = true;
             }
         }
@@ -255,11 +265,13 @@ namespace LogisticProgram
                 buttonChange.FlatAppearance.BorderSize = 1;
                 buttonAdd.FlatAppearance.BorderSize = 0;
                 buttonMake.Text = "Отредактировать";
+                TextBoxEnabled(false);
                 timer1.Enabled = true;
             }
             else
             {
                 buttonChange.FlatAppearance.BorderSize = 0;
+                TextBoxClear();
                 timer2.Enabled = true;
             }
         }
@@ -428,11 +440,60 @@ namespace LogisticProgram
             {
                 panelShipping.BackColor = Color.FromArgb(225, 50, 77);
                 check = false;
+                if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
+                {
+                    panelShipping.BackColor = Color.FromArgb(62, 120, 138);
+                    check = true;
+                }
+            }
+            else
+            {
+                string text = Convert.ToString(Regex.Match(textBoxShipping.Text, @"-\d+-"));
+                string month = Convert.ToString(Regex.Match(text, @"\d+"));
+
+                string days = Convert.ToString(Regex.Match(Regex.Match(textBoxShipping.Text, @"-\d+$").ToString(), @"\d+"));
+
+                if (Convert.ToInt32(month) > 12 || Convert.ToInt32(month) < 0)
+                {
+                    panelShipping.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+                else
+                {
+                    if (Convert.ToInt32(days) > 31 || Convert.ToInt32(days) < 1)
+                    {
+                        panelShipping.BackColor = Color.FromArgb(225, 50, 77);
+                        check = false;
+                    }
+                }
             }
             if (textBoxShipped.Text == "Дата выгрузки" || !Regex.IsMatch(textBoxShipped.Text, @"^\d{4}-\d{2}-\d{2}$"))
             {
                 panelShipped.BackColor = Color.FromArgb(225, 50, 77);
                 check = false;
+                if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
+                {
+                    panelShipped.BackColor = Color.FromArgb(62, 120, 138);
+                    check = true;
+                }
+            }
+            else
+            {
+                string days = Convert.ToString(Regex.Match(Regex.Match(textBoxShipped.Text, @"-\d+$").ToString(), @"\d+"));
+                string month = Convert.ToString(Regex.Match(Regex.Match(textBoxShipped.Text, @"-\d+-").ToString(), @"\d+"));
+                if (Convert.ToInt32(month) > 12 || Convert.ToInt32(month) < 0)
+                {
+                    panelShipped.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+                else
+                {
+                    if (Convert.ToInt32(days) > 31 || Convert.ToInt32(days) < 1)
+                    {
+                        panelShipping.BackColor = Color.FromArgb(225, 50, 77);
+                        check = false;
+                    }
+                }
             }
             if (textBoxWeight.Text == "Вес отгрузки")
             {
@@ -450,9 +511,9 @@ namespace LogisticProgram
                 check = false;
             }
 
-            //Add to database
             if (check)
             {
+                //Add to database
                 string number = textBoxNumber.Text;
                 string dateShipping = textBoxShipping.Text;
                 string dateShipped = textBoxShipped.Text;
@@ -469,9 +530,39 @@ namespace LogisticProgram
 
                     LoadData();
 
-                    textBoxNumber.Text = "Гос. номер";
-                    textBoxNumber.ForeColor = Color.FromArgb(125, 125, 125);
-                    textBoxNumber.Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+                    TextBoxClear();
+                }
+                else if (buttonMake.Text == "Удалить")
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"delete from transport where \"number\" = {numberForChange}", conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    LoadData();
+
+                    TextBoxClear();
+                }
+                else if (buttonMake.Text == "Отредактировать")
+                {
+                    DateTime date = DateTime.ParseExact(dateShipping, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    int days = date.Day;
+                    int month = date.Month;
+                    int year = date.Year;
+
+                    DateTime date2 = DateTime.ParseExact(dateShipped, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    int days2 = date2.Day;
+                    int month2 = date2.Month;
+                    int year2 = date2.Year;
+
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"update transport set \"State number\" = '{number}', \"Date shipping\" = '{year}-{month}-{days}', \"Date shipped\" = '{year2}-{month2}-{days2}', \"Weight\" = {weight}, \"price\" = {price}, \"currency\" = '{currency}' where \"number\" = {numberForChange}", conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    LoadData();
+
+                    TextBoxClear();
                 }
             }
         }
@@ -484,6 +575,10 @@ namespace LogisticProgram
             {
                 e.Handled = true;
             }
+            else
+            {
+                panelWeight.BackColor = Color.FromArgb(62, 120, 138);
+            }
         }
 
         private void textBoxPrice_KeyPress(object sender, KeyPressEventArgs e)
@@ -493,6 +588,10 @@ namespace LogisticProgram
             if (!Char.IsDigit(ch) && ch != 8)
             {
                 e.Handled = true;
+            }
+            else
+            {
+                panelPrice.BackColor = Color.FromArgb(62, 120, 138);
             }
         }
 
@@ -504,6 +603,10 @@ namespace LogisticProgram
             {
                 e.Handled = true;
             }
+            else
+            {
+                panelCurrency.BackColor = Color.FromArgb(62, 120, 138);
+            }
         }
 
         private void textBoxShipping_KeyPress(object sender, KeyPressEventArgs e)
@@ -513,6 +616,10 @@ namespace LogisticProgram
             if (!Char.IsDigit(ch) && ch != 8 && ch != 45)
             {
                 e.Handled = true;
+            }
+            else
+            {
+                panelShipping.BackColor = Color.FromArgb(62, 120, 138);
             }
         }
 
@@ -524,6 +631,10 @@ namespace LogisticProgram
             {
                 e.Handled = true;
             }
+            else
+            {
+                panelShipped.BackColor = Color.FromArgb(62, 120, 138);
+            }
         }
 
         private void textBoxNumber_KeyPress(object sender, KeyPressEventArgs e)
@@ -533,6 +644,10 @@ namespace LogisticProgram
             if (!Char.IsDigit(ch) && ch != 8 && !Char.IsLetter(ch) && ch != 47 && ch != 32 && ch != 45)
             {
                 e.Handled = true;
+            }
+            else
+            {
+                panelNumber.BackColor = Color.FromArgb(62, 120, 138);
             }
         }
 
@@ -607,6 +722,7 @@ namespace LogisticProgram
         private void dataGridViewTransport_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int index = dataGridViewTransport.CurrentCell.RowIndex;
+            numberForChange = Convert.ToInt32(dataGridViewTransport.Rows[index].Cells[0].Value);
 
             textBoxNumber.Text = Convert.ToString(dataGridViewTransport.Rows[index].Cells[1].Value);
             textBoxShipping.Text = Convert.ToString(dataGridViewTransport.Rows[index].Cells[2].Value);
@@ -617,6 +733,11 @@ namespace LogisticProgram
             textBoxPrice.Text = Convert.ToString(Regex.Match(price, @"\d+"));
             textBoxCurrency.Text = Convert.ToString(Regex.Match(price, @"[а-яА-Яa-zA-Z]+"));
 
+            ChangeStyleBoxes();
+        }
+
+        public void ChangeStyleBoxes()
+        {
             foreach (Control pn in Controls)
             {
                 if (pn is Panel)
@@ -625,18 +746,182 @@ namespace LogisticProgram
                     {
                         if (el is Panel)
                         {
-                            foreach (Control box in el.Controls)
+                            foreach (Control pn2 in el.Controls)
                             {
-                                if (Convert.ToString(box.Tag) == "boxes")
+                                if (pn2 is Panel)
                                 {
-                                    box.ForeColor = Color.FromArgb(143, 201, 219);
-                                    box.Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+                                    foreach (Control box in pn2.Controls)
+                                    {
+                                        if (Convert.ToString(box.Tag) == "boxes")
+                                        {
+                                            box.ForeColor = Color.FromArgb(143, 201, 219);
+                                            box.Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+
+        private void textBoxDate_Enter(object sender, EventArgs e)
+        {
+            if (textBoxDate.Text == "Дата")
+            {
+                textBoxDate.Text = "";
+                panelDate.BackColor = Color.FromArgb(62, 120, 138);
+                textBoxDate.ForeColor = Color.FromArgb(143, 201, 219);
+                textBoxDate.Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxDate_Leave(object sender, EventArgs e)
+        {
+            if (textBoxDate.Text == "")
+            {
+                textBoxDate.Text = "Дата";
+                textBoxDate.ForeColor = Color.FromArgb(125, 125, 125);
+                textBoxDate.Font = new Font(textBoxShipped.Font.Name, 10, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxTrucks_Enter(object sender, EventArgs e)
+        {
+            if (textBoxTrucks.Text == "Отгружено машин")
+            {
+                textBoxTrucks.Text = "";
+                panelTrucks.BackColor = Color.FromArgb(62, 120, 138);
+                textBoxTrucks.ForeColor = Color.FromArgb(143, 201, 219);
+                textBoxTrucks.Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxTrucks_Leave(object sender, EventArgs e)
+        {
+            if (textBoxTrucks.Text == "")
+            {
+                textBoxTrucks.Text = "Отгружено машин";
+                textBoxTrucks.ForeColor = Color.FromArgb(125, 125, 125);
+                textBoxTrucks.Font = new Font(textBoxShipped.Font.Name, 10, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxShippingWeight_Enter(object sender, EventArgs e)
+        {
+            if (textBoxShippingWeight.Text == "Отгружено, кг")
+            {
+                textBoxShippingWeight.Text = "";
+                panelShippingWeight.BackColor = Color.FromArgb(62, 120, 138);
+                textBoxShippingWeight.ForeColor = Color.FromArgb(143, 201, 219);
+                textBoxShippingWeight.Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxShippingWeight_Leave(object sender, EventArgs e)
+        {
+            if (textBoxShippingWeight.Text == "")
+            {
+                textBoxShippingWeight.Text = "Отгружено, кг";
+                textBoxShippingWeight.ForeColor = Color.FromArgb(125, 125, 125);
+                textBoxShippingWeight.Font = new Font(textBoxShipped.Font.Name, 10, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxPipes_Enter(object sender, EventArgs e)
+        {
+            if (textBoxPipes.Text == "Отгружено труб, шт")
+            {
+                textBoxPipes.Text = "";
+                panelPipes.BackColor = Color.FromArgb(62, 120, 138);
+                textBoxPipes.ForeColor = Color.FromArgb(143, 201, 219);
+                textBoxPipes.Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxPipes_Leave(object sender, EventArgs e)
+        {
+            if (textBoxPipes.Text == "")
+            {
+                textBoxPipes.Text = "Отгружено труб, шт";
+                textBoxPipes.ForeColor = Color.FromArgb(125, 125, 125);
+                textBoxPipes.Font = new Font(textBoxShipped.Font.Name, 10, textBoxShipped.Font.Style);
+            }
+        }
+
+        public void TextBoxClear()
+        {
+            textBoxNumber.Text = "Гос. номер";
+            textBoxShipping.Text = "Дата отгрузки";
+            textBoxShipped.Text = "Дата выгрузки";
+            textBoxWeight.Text = "Вес отгрузки";
+            textBoxPrice.Text = "Стоимость";
+            textBoxCurrency.Text = "Валюта";
+
+            foreach (Control pn in Controls)
+            {
+                if (pn is Panel)
+                {
+                    foreach (Control el in pn.Controls)
+                    {
+                        if (el is Panel)
+                        {
+                            foreach (Control pn2 in el.Controls)
+                            {
+                                if (pn2 is Panel)
+                                {
+                                    foreach (Control box in pn2.Controls)
+                                    {
+                                        if (Convert.ToString(box.Tag) == "boxes")
+                                        {
+                                            box.ForeColor = Color.FromArgb(125, 125, 125);
+                                            box.Font = new Font(textBoxShipped.Font.Name, 10, textBoxShipped.Font.Style);
+                                        }
+                                        if (box is Panel)
+                                        {
+                                            box.BackColor = Color.FromArgb(62, 120, 138);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public void TextBoxEnabled(bool enabled)
+        {
+            foreach (Control pn in Controls)
+            {
+                if (pn is Panel)
+                {
+                    foreach (Control el in pn.Controls)
+                    {
+                        if (el is Panel)
+                        {
+                            foreach (Control pn2 in el.Controls)
+                            {
+                                if (pn2 is Panel)
+                                {
+                                    foreach (Control box in pn2.Controls)
+                                    {
+                                        if (Convert.ToString(box.Tag) == "boxes")
+                                        {
+                                            ((TextBox)box).ReadOnly = enabled;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void dataGridViewTransport_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
