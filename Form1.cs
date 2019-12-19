@@ -13,14 +13,19 @@ namespace LogisticProgram
     {
         NpgsqlConnection conn = new NpgsqlConnection("Server=rajje.db.elephantsql.com;Port=5432;User Id=slihduor;Password=Z3kDd9k-Hzri0TsNeXOEKYkb7jo9wClC;Database=slihduor;");
         List<Transport> transport = new List<Transport>();
+        List<Shipping> shipping = new List<Shipping>();
+        List<Registry> registry = new List<Registry>();
         public void LoadInfo()
         {
             transport.Clear();
+            shipping.Clear();
+            registry.Clear();
+
+            // Таблица машины
             conn.Open();
             NpgsqlCommand command = new NpgsqlCommand("select * from Transport", conn);
             NpgsqlDataReader reader = command.ExecuteReader();
 
-            // Таблица товары
             if (reader.HasRows)
             {
                 foreach (DbDataRecord record in reader)
@@ -54,6 +59,50 @@ namespace LogisticProgram
                 }
             }
             conn.Close();
+
+            //Таблица отгрузка
+            conn.Open();
+            command = new NpgsqlCommand("select * from Shipping", conn);
+            reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                foreach (DbDataRecord record in reader)
+                {
+                    shipping.Add(new Shipping
+                    {
+                        Number = Convert.ToInt32(record["Number"]),
+                        Date = Convert.ToDateTime(record["Date"]).ToShortDateString(),
+                        Trucks = Convert.ToInt32(record["Truck count"]),
+                        Weight = Convert.ToInt32(record["Weight"]),
+                        Pipes = Convert.ToInt32(record["Pipes count"]),
+                    });
+                }
+            }
+            conn.Close();
+
+            //Таблица реестр
+            conn.Open();
+            command = new NpgsqlCommand("select \"Personal\", \"Date\", Diameter, \"Pipe number\", Length, Thickness, Registry.Weight from Registry join Shipping using (Number)", conn);
+            reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                foreach (DbDataRecord record in reader)
+                {
+                    registry.Add(new Registry
+                    {
+                        Number = Convert.ToInt32(record["Personal"]),
+                        Date = Convert.ToDateTime(record["Date"]).ToShortDateString(),
+                        Diameter = Convert.ToInt32(record["Diameter"]),
+                        PipeNumber = Convert.ToInt32(record["Pipe number"]),
+                        Length = Convert.ToInt32(record["Length"]),
+                        Thickness = Convert.ToInt32(record["Thickness"]),
+                        Weight = Convert.ToInt32(record["Weight"])
+                    });
+                }
+            }
+            conn.Close();
         }
 
         public Form1()
@@ -67,20 +116,21 @@ namespace LogisticProgram
         {
             panelRight.Height = buttonTransport.Height;
             panelRight.Top = buttonTransport.Top;
+            timerAnimateTransport.Enabled = true;
         }
 
         private void buttonDaily_Click(object sender, EventArgs e)
         {
             panelRight.Height = buttonDaily.Height;
             panelRight.Top = buttonDaily.Top;
-            //timerDataBases.Enabled = true;
-            timerAnimate.Enabled = true;
+            timerAnimateShipping.Enabled = true;
         }
 
         private void buttonRegistry_Click(object sender, EventArgs e)
         {
             panelRight.Height = buttonRegistry.Height;
             panelRight.Top = buttonRegistry.Top;
+            timerAnimateRegistry.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -90,8 +140,16 @@ namespace LogisticProgram
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            LoadData();
+        }
+        public void LoadData()
+        {
             LoadInfo();
+            dataGridViewTransport.Rows.Clear();
+            dataGridViewShipping.Rows.Clear();
+            dataGridViewRegistry.Rows.Clear();
 
+            //transport
             int i = 0;
 
             for (int j = 0; j < transport.Count - 1; j++)
@@ -116,8 +174,45 @@ namespace LogisticProgram
                 dataGridViewTransport.Rows[i].Cells[5].Value = $"{el.Price} {el.Currency}";
                 i++;
             }
-        }
 
+            //shipping
+            i = 0;
+
+            for (int j = 0; j < shipping.Count - 1; j++)
+            {
+                dataGridViewShipping.Rows.Add();
+            }
+
+            foreach (Shipping el in shipping)
+            {
+                dataGridViewShipping.Rows[i].Cells[0].Value = el.Number;
+                dataGridViewShipping.Rows[i].Cells[1].Value = el.Date;
+                dataGridViewShipping.Rows[i].Cells[2].Value = el.Trucks;
+                dataGridViewShipping.Rows[i].Cells[3].Value = el.Weight;
+                dataGridViewShipping.Rows[i].Cells[4].Value = el.Pipes;
+                i++;
+            }
+
+            //registry
+            i = 0;
+
+            for (int j = 0; j < registry.Count - 1; j++)
+            {
+                dataGridViewRegistry.Rows.Add();
+            }
+
+            foreach (Registry el in registry)
+            {
+                dataGridViewRegistry.Rows[i].Cells[0].Value = el.Number;
+                dataGridViewRegistry.Rows[i].Cells[1].Value = el.Date;
+                dataGridViewRegistry.Rows[i].Cells[2].Value = el.Diameter;
+                dataGridViewRegistry.Rows[i].Cells[3].Value = el.PipeNumber;
+                dataGridViewRegistry.Rows[i].Cells[4].Value = el.Length;
+                dataGridViewRegistry.Rows[i].Cells[5].Value = el.Thickness;
+                dataGridViewRegistry.Rows[i].Cells[6].Value = el.Weight;
+                i++;
+            }
+        }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             if (buttonAdd.FlatAppearance.BorderSize == 0)
@@ -173,11 +268,7 @@ namespace LogisticProgram
         {
             if (panelTransport.Left != 0)
             {
-                while (panelTransport.Left > 0)
-                {
-                    panelTransport.Left -= 1;
-                }
-                timer1.Enabled = false;
+                panelTransport.Left -= 5;
             }
             else
             {
@@ -187,13 +278,9 @@ namespace LogisticProgram
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            if (panelTransport.Left == 0)
+            if (panelTransport.Left != 275)
             {
-                while (panelTransport.Left < 278)
-                {
-                    panelTransport.Left += 1;
-                }
-                timer2.Enabled = false;
+                panelTransport.Left += 5;
             }
             else
             {
@@ -380,33 +467,7 @@ namespace LogisticProgram
                     command.ExecuteNonQuery();
                     conn.Close();
 
-                    LoadInfo();
-
-                    int i = 0;
-                    dataGridViewTransport.Rows.Clear();
-
-                    for (int j = 0; j < transport.Count - 1; j++)
-                    {
-                        dataGridViewTransport.Rows.Add();
-                    }
-
-                    foreach (Transport el in transport)
-                    {
-                        dataGridViewTransport.Rows[i].Cells[0].Value = el.Number;
-                        dataGridViewTransport.Rows[i].Cells[1].Value = el.StateNubmer;
-                        dataGridViewTransport.Rows[i].Cells[2].Value = el.DateShipping;
-                        if (el.DateShipped != "")
-                        {
-                            dataGridViewTransport.Rows[i].Cells[3].Value = el.DateShipped;
-                        }
-                        else
-                        {
-                            dataGridViewTransport.Rows[i].Cells[3].Value = "—";
-                        }
-                        dataGridViewTransport.Rows[i].Cells[4].Value = el.Weight;
-                        dataGridViewTransport.Rows[i].Cells[5].Value = $"{el.Price} {el.Currency}";
-                        i++;
-                    }
+                    LoadData();
 
                     textBoxNumber.Text = "Гос. номер";
                     textBoxNumber.ForeColor = Color.FromArgb(125, 125, 125);
@@ -481,18 +542,100 @@ namespace LogisticProgram
             {
                 if (dataGridViewShipping.Top > 95)
                 {
-                    dataGridViewShipping.Top -= 5;
-                    dataGridViewTransport.Top -= 5; 
+                    dataGridViewShipping.Top -= 15;
+                    dataGridViewTransport.Top -= 15;
+                    dataGridViewRegistry.Top -= 15;
                 }
                 else
                 {
-                    dataGridViewShipping.Top += 5;
-                    dataGridViewTransport.Top += 5;
+                    dataGridViewShipping.Top += 15;
+                    dataGridViewTransport.Top += 15;
+                    dataGridViewRegistry.Top += 15;
                 }
             }
             else
             {
-                timerAnimate.Enabled = false;
+                timerAnimateShipping.Enabled = false;
+            }
+        }
+
+        private void timerAnimateTransport_Tick(object sender, EventArgs e)
+        {
+            if (dataGridViewTransport.Top != 95)
+            {
+                if (dataGridViewTransport.Top > 95)
+                {
+                    dataGridViewShipping.Top -= 15;
+                    dataGridViewTransport.Top -= 15;
+                }
+                else
+                {
+                    dataGridViewShipping.Top += 15;
+                    dataGridViewTransport.Top += 15;
+                    dataGridViewRegistry.Top += 15;
+                }
+            }
+            else
+            {
+                timerAnimateTransport.Enabled = false;
+            }
+        }
+
+        private void timerAnimateRegistry_Tick(object sender, EventArgs e)
+        {
+            if (dataGridViewRegistry.Top != 95)
+            {
+                if (dataGridViewRegistry.Top > 95)
+                {
+                    dataGridViewShipping.Top -= 15;
+                    dataGridViewTransport.Top -= 15;
+                    dataGridViewRegistry.Top -= 15;
+                }
+                else
+                {
+                    dataGridViewShipping.Top += 15;
+                    dataGridViewTransport.Top += 15;
+                    dataGridViewRegistry.Top += 15;
+                }
+            }
+            else
+            {
+                timerAnimateRegistry.Enabled = false;
+            }
+        }
+
+        private void dataGridViewTransport_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int index = dataGridViewTransport.CurrentCell.RowIndex;
+
+            textBoxNumber.Text = Convert.ToString(dataGridViewTransport.Rows[index].Cells[1].Value);
+            textBoxShipping.Text = Convert.ToString(dataGridViewTransport.Rows[index].Cells[2].Value);
+            textBoxShipped.Text = Convert.ToString(dataGridViewTransport.Rows[index].Cells[3].Value);
+            textBoxWeight.Text = Convert.ToString(dataGridViewTransport.Rows[index].Cells[4].Value);
+
+            string price = Convert.ToString(dataGridViewTransport.Rows[index].Cells[5].Value);
+            textBoxPrice.Text = Convert.ToString(Regex.Match(price, @"\d+"));
+            textBoxCurrency.Text = Convert.ToString(Regex.Match(price, @"[а-яА-Яa-zA-Z]+"));
+
+            foreach (Control pn in Controls)
+            {
+                if (pn is Panel)
+                {
+                    foreach (Control el in pn.Controls)
+                    {
+                        if (el is Panel)
+                        {
+                            foreach (Control box in el.Controls)
+                            {
+                                if (Convert.ToString(box.Tag) == "boxes")
+                                {
+                                    box.ForeColor = Color.FromArgb(143, 201, 219);
+                                    box.Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
