@@ -30,33 +30,33 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonRegistry = new System.Windows.Forms.Button();
             this.buttonDaily = new System.Windows.Forms.Button();
@@ -90,15 +90,6 @@
             this.buttonRemove = new System.Windows.Forms.Button();
             this.buttonChange = new System.Windows.Forms.Button();
             this.panelData = new System.Windows.Forms.Panel();
-            this.panelShippingBoxes = new System.Windows.Forms.Panel();
-            this.panelDate = new System.Windows.Forms.Panel();
-            this.textBoxDate = new System.Windows.Forms.TextBox();
-            this.textBoxTrucks = new System.Windows.Forms.TextBox();
-            this.panelPipes = new System.Windows.Forms.Panel();
-            this.textBoxShippingWeight = new System.Windows.Forms.TextBox();
-            this.panelShippingWeight = new System.Windows.Forms.Panel();
-            this.textBoxPipes = new System.Windows.Forms.TextBox();
-            this.panelTrucks = new System.Windows.Forms.Panel();
             this.panelTransportBoxes = new System.Windows.Forms.Panel();
             this.panelCurrency = new System.Windows.Forms.Panel();
             this.panelNumber = new System.Windows.Forms.Panel();
@@ -113,6 +104,15 @@
             this.panelShipping = new System.Windows.Forms.Panel();
             this.textBoxPrice = new System.Windows.Forms.TextBox();
             this.buttonMake = new System.Windows.Forms.Button();
+            this.panelShippingBoxes = new System.Windows.Forms.Panel();
+            this.panelDate = new System.Windows.Forms.Panel();
+            this.textBoxDate = new System.Windows.Forms.TextBox();
+            this.textBoxTrucks = new System.Windows.Forms.TextBox();
+            this.panelPipes = new System.Windows.Forms.Panel();
+            this.textBoxShippingWeight = new System.Windows.Forms.TextBox();
+            this.panelShippingWeight = new System.Windows.Forms.Panel();
+            this.textBoxPipes = new System.Windows.Forms.TextBox();
+            this.panelTrucks = new System.Windows.Forms.Panel();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
@@ -126,8 +126,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShipping)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransport)).BeginInit();
             this.panelData.SuspendLayout();
-            this.panelShippingBoxes.SuspendLayout();
             this.panelTransportBoxes.SuspendLayout();
+            this.panelShippingBoxes.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -241,7 +241,7 @@
             this.panelTransport.Controls.Add(this.buttonChange);
             this.panelTransport.Controls.Add(this.panelData);
             this.panelTransport.Controls.Add(this.buttonAdd);
-            this.panelTransport.Location = new System.Drawing.Point(275, 0);
+            this.panelTransport.Location = new System.Drawing.Point(0, 0);
             this.panelTransport.Name = "panelTransport";
             this.panelTransport.Size = new System.Drawing.Size(1126, 854);
             this.panelTransport.TabIndex = 2;
@@ -250,21 +250,21 @@
             // dataGridViewRegistry
             // 
             this.dataGridViewRegistry.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.dataGridViewRegistry.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.dataGridViewRegistry.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle28;
             this.dataGridViewRegistry.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewRegistry.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
             this.dataGridViewRegistry.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewRegistry.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dataGridViewRegistry.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewRegistry.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle29.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
+            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewRegistry.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle29;
             this.dataGridViewRegistry.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewRegistry.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn7,
@@ -275,14 +275,14 @@
             this.Thickness,
             this.dataGridViewTextBoxColumn11});
             this.dataGridViewRegistry.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewRegistry.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle37.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
+            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewRegistry.DefaultCellStyle = dataGridViewCellStyle37;
             this.dataGridViewRegistry.EnableHeadersVisualStyles = false;
             this.dataGridViewRegistry.Location = new System.Drawing.Point(19, 1325);
             this.dataGridViewRegistry.Name = "dataGridViewRegistry";
@@ -294,10 +294,10 @@
             // 
             // dataGridViewTextBoxColumn7
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle30.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
+            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle30;
             this.dataGridViewTextBoxColumn7.FillWeight = 152.2843F;
             this.dataGridViewTextBoxColumn7.HeaderText = "№";
             this.dataGridViewTextBoxColumn7.MinimumWidth = 30;
@@ -307,9 +307,9 @@
             // 
             // DateRegistry
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.DateRegistry.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle31.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.DateRegistry.DefaultCellStyle = dataGridViewCellStyle31;
             this.DateRegistry.FillWeight = 16.20349F;
             this.DateRegistry.HeaderText = "Дата отгрузки";
             this.DateRegistry.MinimumWidth = 115;
@@ -318,9 +318,9 @@
             // 
             // Diameter
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Diameter.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle32.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Diameter.DefaultCellStyle = dataGridViewCellStyle32;
             this.Diameter.FillWeight = 274.2044F;
             this.Diameter.HeaderText = "Диаметр";
             this.Diameter.MinimumWidth = 70;
@@ -329,36 +329,36 @@
             // 
             // PipeNumber
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.PipeNumber.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.PipeNumber.DefaultCellStyle = dataGridViewCellStyle33;
             this.PipeNumber.HeaderText = "Номер трубы";
             this.PipeNumber.Name = "PipeNumber";
             this.PipeNumber.ReadOnly = true;
             // 
             // Length
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Length.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Length.DefaultCellStyle = dataGridViewCellStyle34;
             this.Length.HeaderText = "Длина";
             this.Length.Name = "Length";
             this.Length.ReadOnly = true;
             // 
             // Thickness
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Thickness.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle35.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Thickness.DefaultCellStyle = dataGridViewCellStyle35;
             this.Thickness.HeaderText = "Толщина";
             this.Thickness.Name = "Thickness";
             this.Thickness.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn11
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle36.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle36;
             this.dataGridViewTextBoxColumn11.FillWeight = 107.3387F;
             this.dataGridViewTextBoxColumn11.HeaderText = "Вес отгрузки";
             this.dataGridViewTextBoxColumn11.MinimumWidth = 100;
@@ -368,21 +368,21 @@
             // dataGridViewShipping
             // 
             this.dataGridViewShipping.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.dataGridViewShipping.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.dataGridViewShipping.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle38;
             this.dataGridViewShipping.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewShipping.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
             this.dataGridViewShipping.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewShipping.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dataGridViewShipping.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewShipping.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle39.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewShipping.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle39;
             this.dataGridViewShipping.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewShipping.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NumberShipping,
@@ -391,14 +391,14 @@
             this.WeightDay,
             this.Pipes});
             this.dataGridViewShipping.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewShipping.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle45.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            dataGridViewCellStyle45.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle45.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            dataGridViewCellStyle45.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
+            dataGridViewCellStyle45.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle45.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewShipping.DefaultCellStyle = dataGridViewCellStyle45;
             this.dataGridViewShipping.EnableHeadersVisualStyles = false;
             this.dataGridViewShipping.Location = new System.Drawing.Point(19, 710);
             this.dataGridViewShipping.Name = "dataGridViewShipping";
@@ -407,53 +407,54 @@
             this.dataGridViewShipping.RowTemplate.Height = 24;
             this.dataGridViewShipping.Size = new System.Drawing.Size(783, 248);
             this.dataGridViewShipping.TabIndex = 5;
+            this.dataGridViewShipping.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewShipping_CellMouseClick);
             // 
             // NumberShipping
             // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.NumberShipping.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.NumberShipping.DefaultCellStyle = dataGridViewCellStyle40;
             this.NumberShipping.HeaderText = "№";
             this.NumberShipping.Name = "NumberShipping";
             this.NumberShipping.ReadOnly = true;
             // 
             // Date
             // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Date.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle41.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle41.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Date.DefaultCellStyle = dataGridViewCellStyle41;
             this.Date.HeaderText = "Дата";
             this.Date.Name = "Date";
             this.Date.ReadOnly = true;
             // 
             // Trucks
             // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Trucks.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle42.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Trucks.DefaultCellStyle = dataGridViewCellStyle42;
             this.Trucks.HeaderText = "Количество машин";
             this.Trucks.Name = "Trucks";
             this.Trucks.ReadOnly = true;
             // 
             // WeightDay
             // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.WeightDay.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle43.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.WeightDay.DefaultCellStyle = dataGridViewCellStyle43;
             this.WeightDay.HeaderText = "Отгруженно, кг";
             this.WeightDay.Name = "WeightDay";
             this.WeightDay.ReadOnly = true;
             // 
             // Pipes
             // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Pipes.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle44.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle44.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Pipes.DefaultCellStyle = dataGridViewCellStyle44;
             this.Pipes.HeaderText = "Отгружено труб, шт";
             this.Pipes.Name = "Pipes";
             this.Pipes.ReadOnly = true;
@@ -461,21 +462,21 @@
             // dataGridViewTransport
             // 
             this.dataGridViewTransport.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.dataGridViewTransport.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle46.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.dataGridViewTransport.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle46;
             this.dataGridViewTransport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewTransport.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
             this.dataGridViewTransport.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewTransport.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dataGridViewTransport.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTransport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle47.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            dataGridViewCellStyle47.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle47.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle47.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
+            dataGridViewCellStyle47.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle47.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTransport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle47;
             this.dataGridViewTransport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTransport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Number,
@@ -485,14 +486,14 @@
             this.Weight,
             this.Price});
             this.dataGridViewTransport.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle27.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTransport.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle54.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            dataGridViewCellStyle54.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle54.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            dataGridViewCellStyle54.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
+            dataGridViewCellStyle54.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle54.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTransport.DefaultCellStyle = dataGridViewCellStyle54;
             this.dataGridViewTransport.EnableHeadersVisualStyles = false;
             this.dataGridViewTransport.Location = new System.Drawing.Point(19, 95);
             this.dataGridViewTransport.Name = "dataGridViewTransport";
@@ -501,15 +502,14 @@
             this.dataGridViewTransport.RowTemplate.Height = 24;
             this.dataGridViewTransport.Size = new System.Drawing.Size(783, 248);
             this.dataGridViewTransport.TabIndex = 0;
-            this.dataGridViewTransport.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTransport_CellContentClick);
             this.dataGridViewTransport.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewTransport_CellMouseClick);
             // 
             // Number
             // 
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
-            this.Number.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle48.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle48.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(50)))), ((int)(((byte)(77)))));
+            this.Number.DefaultCellStyle = dataGridViewCellStyle48;
             this.Number.FillWeight = 152.2843F;
             this.Number.HeaderText = "№";
             this.Number.MinimumWidth = 30;
@@ -519,8 +519,8 @@
             // 
             // State_number
             // 
-            dataGridViewCellStyle22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.State_number.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle49.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.State_number.DefaultCellStyle = dataGridViewCellStyle49;
             this.State_number.FillWeight = 6.097285F;
             this.State_number.HeaderText = "Гос. номер";
             this.State_number.MinimumWidth = 175;
@@ -529,8 +529,8 @@
             // 
             // Date_shipping
             // 
-            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Date_shipping.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle50.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Date_shipping.DefaultCellStyle = dataGridViewCellStyle50;
             this.Date_shipping.FillWeight = 16.20349F;
             this.Date_shipping.HeaderText = "Дата отгрузки";
             this.Date_shipping.MinimumWidth = 115;
@@ -539,8 +539,8 @@
             // 
             // Date_shipped
             // 
-            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Date_shipped.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle51.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Date_shipped.DefaultCellStyle = dataGridViewCellStyle51;
             this.Date_shipped.FillWeight = 43.8719F;
             this.Date_shipped.HeaderText = "Дата выгрузки";
             this.Date_shipped.MinimumWidth = 115;
@@ -549,8 +549,8 @@
             // 
             // Weight
             // 
-            dataGridViewCellStyle25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Weight.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle52.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Weight.DefaultCellStyle = dataGridViewCellStyle52;
             this.Weight.FillWeight = 107.3387F;
             this.Weight.HeaderText = "Вес отгрузки";
             this.Weight.MinimumWidth = 100;
@@ -559,8 +559,8 @@
             // 
             // Price
             // 
-            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
-            this.Price.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle53.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(201)))), ((int)(((byte)(219)))));
+            this.Price.DefaultCellStyle = dataGridViewCellStyle53;
             this.Price.FillWeight = 274.2044F;
             this.Price.HeaderText = "Стоимость";
             this.Price.MinimumWidth = 70;
@@ -597,125 +597,14 @@
             // 
             // panelData
             // 
-            this.panelData.Controls.Add(this.panelTransportBoxes);
             this.panelData.Controls.Add(this.buttonMake);
             this.panelData.Controls.Add(this.panelShippingBoxes);
+            this.panelData.Controls.Add(this.panelTransportBoxes);
             this.panelData.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelData.Location = new System.Drawing.Point(808, 0);
             this.panelData.Name = "panelData";
             this.panelData.Size = new System.Drawing.Size(318, 854);
             this.panelData.TabIndex = 4;
-            // 
-            // panelShippingBoxes
-            // 
-            this.panelShippingBoxes.Controls.Add(this.panelDate);
-            this.panelShippingBoxes.Controls.Add(this.textBoxDate);
-            this.panelShippingBoxes.Controls.Add(this.textBoxTrucks);
-            this.panelShippingBoxes.Controls.Add(this.panelPipes);
-            this.panelShippingBoxes.Controls.Add(this.textBoxShippingWeight);
-            this.panelShippingBoxes.Controls.Add(this.panelShippingWeight);
-            this.panelShippingBoxes.Controls.Add(this.textBoxPipes);
-            this.panelShippingBoxes.Controls.Add(this.panelTrucks);
-            this.panelShippingBoxes.Location = new System.Drawing.Point(21, 59);
-            this.panelShippingBoxes.Name = "panelShippingBoxes";
-            this.panelShippingBoxes.Size = new System.Drawing.Size(270, 329);
-            this.panelShippingBoxes.TabIndex = 9;
-            this.panelShippingBoxes.Tag = "change";
-            this.panelShippingBoxes.Visible = false;
-            // 
-            // panelDate
-            // 
-            this.panelDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            this.panelDate.Location = new System.Drawing.Point(48, 34);
-            this.panelDate.Name = "panelDate";
-            this.panelDate.Size = new System.Drawing.Size(183, 2);
-            this.panelDate.TabIndex = 6;
-            // 
-            // textBoxDate
-            // 
-            this.textBoxDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.textBoxDate.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxDate.Font = new System.Drawing.Font("Century Gothic", 10F);
-            this.textBoxDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
-            this.textBoxDate.Location = new System.Drawing.Point(48, 8);
-            this.textBoxDate.Name = "textBoxDate";
-            this.textBoxDate.Size = new System.Drawing.Size(183, 21);
-            this.textBoxDate.TabIndex = 0;
-            this.textBoxDate.Tag = "boxes";
-            this.textBoxDate.Text = "Дата";
-            this.textBoxDate.Enter += new System.EventHandler(this.textBoxDate_Enter);
-            this.textBoxDate.Leave += new System.EventHandler(this.textBoxDate_Leave);
-            // 
-            // textBoxTrucks
-            // 
-            this.textBoxTrucks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.textBoxTrucks.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxTrucks.Font = new System.Drawing.Font("Century Gothic", 10F);
-            this.textBoxTrucks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
-            this.textBoxTrucks.Location = new System.Drawing.Point(48, 61);
-            this.textBoxTrucks.MaxLength = 10;
-            this.textBoxTrucks.Name = "textBoxTrucks";
-            this.textBoxTrucks.Size = new System.Drawing.Size(183, 21);
-            this.textBoxTrucks.TabIndex = 1;
-            this.textBoxTrucks.Tag = "boxes";
-            this.textBoxTrucks.Text = "Отгружено машин";
-            this.textBoxTrucks.Enter += new System.EventHandler(this.textBoxTrucks_Enter);
-            this.textBoxTrucks.Leave += new System.EventHandler(this.textBoxTrucks_Leave);
-            // 
-            // panelPipes
-            // 
-            this.panelPipes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            this.panelPipes.Location = new System.Drawing.Point(48, 193);
-            this.panelPipes.Name = "panelPipes";
-            this.panelPipes.Size = new System.Drawing.Size(183, 2);
-            this.panelPipes.TabIndex = 7;
-            // 
-            // textBoxShippingWeight
-            // 
-            this.textBoxShippingWeight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.textBoxShippingWeight.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxShippingWeight.Font = new System.Drawing.Font("Century Gothic", 10F);
-            this.textBoxShippingWeight.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
-            this.textBoxShippingWeight.Location = new System.Drawing.Point(48, 114);
-            this.textBoxShippingWeight.MaxLength = 10;
-            this.textBoxShippingWeight.Name = "textBoxShippingWeight";
-            this.textBoxShippingWeight.Size = new System.Drawing.Size(183, 21);
-            this.textBoxShippingWeight.TabIndex = 2;
-            this.textBoxShippingWeight.Tag = "boxes";
-            this.textBoxShippingWeight.Text = "Отгружено, кг";
-            this.textBoxShippingWeight.Enter += new System.EventHandler(this.textBoxShippingWeight_Enter);
-            this.textBoxShippingWeight.Leave += new System.EventHandler(this.textBoxShippingWeight_Leave);
-            // 
-            // panelShippingWeight
-            // 
-            this.panelShippingWeight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            this.panelShippingWeight.Location = new System.Drawing.Point(48, 140);
-            this.panelShippingWeight.Name = "panelShippingWeight";
-            this.panelShippingWeight.Size = new System.Drawing.Size(183, 2);
-            this.panelShippingWeight.TabIndex = 7;
-            // 
-            // textBoxPipes
-            // 
-            this.textBoxPipes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.textBoxPipes.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxPipes.Font = new System.Drawing.Font("Century Gothic", 10F);
-            this.textBoxPipes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
-            this.textBoxPipes.Location = new System.Drawing.Point(48, 167);
-            this.textBoxPipes.Name = "textBoxPipes";
-            this.textBoxPipes.Size = new System.Drawing.Size(183, 21);
-            this.textBoxPipes.TabIndex = 3;
-            this.textBoxPipes.Tag = "boxes";
-            this.textBoxPipes.Text = "Отгружено труб, шт";
-            this.textBoxPipes.Enter += new System.EventHandler(this.textBoxPipes_Enter);
-            this.textBoxPipes.Leave += new System.EventHandler(this.textBoxPipes_Leave);
-            // 
-            // panelTrucks
-            // 
-            this.panelTrucks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            this.panelTrucks.Location = new System.Drawing.Point(48, 87);
-            this.panelTrucks.Name = "panelTrucks";
-            this.panelTrucks.Size = new System.Drawing.Size(183, 2);
-            this.panelTrucks.TabIndex = 7;
             // 
             // panelTransportBoxes
             // 
@@ -901,6 +790,123 @@
             this.buttonMake.UseVisualStyleBackColor = true;
             this.buttonMake.Click += new System.EventHandler(this.buttonMake_Click);
             // 
+            // panelShippingBoxes
+            // 
+            this.panelShippingBoxes.Controls.Add(this.panelDate);
+            this.panelShippingBoxes.Controls.Add(this.textBoxDate);
+            this.panelShippingBoxes.Controls.Add(this.textBoxTrucks);
+            this.panelShippingBoxes.Controls.Add(this.panelPipes);
+            this.panelShippingBoxes.Controls.Add(this.textBoxShippingWeight);
+            this.panelShippingBoxes.Controls.Add(this.panelShippingWeight);
+            this.panelShippingBoxes.Controls.Add(this.textBoxPipes);
+            this.panelShippingBoxes.Controls.Add(this.panelTrucks);
+            this.panelShippingBoxes.Location = new System.Drawing.Point(21, 59);
+            this.panelShippingBoxes.Name = "panelShippingBoxes";
+            this.panelShippingBoxes.Size = new System.Drawing.Size(270, 329);
+            this.panelShippingBoxes.TabIndex = 9;
+            this.panelShippingBoxes.Tag = "change";
+            this.panelShippingBoxes.Visible = false;
+            // 
+            // panelDate
+            // 
+            this.panelDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            this.panelDate.Location = new System.Drawing.Point(48, 34);
+            this.panelDate.Name = "panelDate";
+            this.panelDate.Size = new System.Drawing.Size(183, 2);
+            this.panelDate.TabIndex = 6;
+            // 
+            // textBoxDate
+            // 
+            this.textBoxDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.textBoxDate.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxDate.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.textBoxDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
+            this.textBoxDate.Location = new System.Drawing.Point(48, 8);
+            this.textBoxDate.MaxLength = 10;
+            this.textBoxDate.Name = "textBoxDate";
+            this.textBoxDate.Size = new System.Drawing.Size(183, 21);
+            this.textBoxDate.TabIndex = 0;
+            this.textBoxDate.Tag = "boxes";
+            this.textBoxDate.Text = "Дата";
+            this.textBoxDate.Enter += new System.EventHandler(this.textBoxDate_Enter);
+            this.textBoxDate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDate_KeyPress);
+            this.textBoxDate.Leave += new System.EventHandler(this.textBoxDate_Leave);
+            // 
+            // textBoxTrucks
+            // 
+            this.textBoxTrucks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.textBoxTrucks.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxTrucks.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.textBoxTrucks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
+            this.textBoxTrucks.Location = new System.Drawing.Point(48, 61);
+            this.textBoxTrucks.MaxLength = 2;
+            this.textBoxTrucks.Name = "textBoxTrucks";
+            this.textBoxTrucks.Size = new System.Drawing.Size(183, 21);
+            this.textBoxTrucks.TabIndex = 1;
+            this.textBoxTrucks.Tag = "boxes";
+            this.textBoxTrucks.Text = "Отгружено машин";
+            this.textBoxTrucks.Enter += new System.EventHandler(this.textBoxTrucks_Enter);
+            this.textBoxTrucks.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTrucks_KeyPress);
+            this.textBoxTrucks.Leave += new System.EventHandler(this.textBoxTrucks_Leave);
+            // 
+            // panelPipes
+            // 
+            this.panelPipes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            this.panelPipes.Location = new System.Drawing.Point(48, 193);
+            this.panelPipes.Name = "panelPipes";
+            this.panelPipes.Size = new System.Drawing.Size(183, 2);
+            this.panelPipes.TabIndex = 7;
+            // 
+            // textBoxShippingWeight
+            // 
+            this.textBoxShippingWeight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.textBoxShippingWeight.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxShippingWeight.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.textBoxShippingWeight.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
+            this.textBoxShippingWeight.Location = new System.Drawing.Point(48, 114);
+            this.textBoxShippingWeight.MaxLength = 6;
+            this.textBoxShippingWeight.Name = "textBoxShippingWeight";
+            this.textBoxShippingWeight.Size = new System.Drawing.Size(183, 21);
+            this.textBoxShippingWeight.TabIndex = 2;
+            this.textBoxShippingWeight.Tag = "boxes";
+            this.textBoxShippingWeight.Text = "Отгружено, кг";
+            this.textBoxShippingWeight.Enter += new System.EventHandler(this.textBoxShippingWeight_Enter);
+            this.textBoxShippingWeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxShippingWeight_KeyPress);
+            this.textBoxShippingWeight.Leave += new System.EventHandler(this.textBoxShippingWeight_Leave);
+            // 
+            // panelShippingWeight
+            // 
+            this.panelShippingWeight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            this.panelShippingWeight.Location = new System.Drawing.Point(48, 140);
+            this.panelShippingWeight.Name = "panelShippingWeight";
+            this.panelShippingWeight.Size = new System.Drawing.Size(183, 2);
+            this.panelShippingWeight.TabIndex = 7;
+            // 
+            // textBoxPipes
+            // 
+            this.textBoxPipes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.textBoxPipes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxPipes.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.textBoxPipes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
+            this.textBoxPipes.Location = new System.Drawing.Point(48, 167);
+            this.textBoxPipes.MaxLength = 3;
+            this.textBoxPipes.Name = "textBoxPipes";
+            this.textBoxPipes.Size = new System.Drawing.Size(183, 21);
+            this.textBoxPipes.TabIndex = 3;
+            this.textBoxPipes.Tag = "boxes";
+            this.textBoxPipes.Text = "Отгружено труб, шт";
+            this.textBoxPipes.Enter += new System.EventHandler(this.textBoxPipes_Enter);
+            this.textBoxPipes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPipes_KeyPress);
+            this.textBoxPipes.Leave += new System.EventHandler(this.textBoxPipes_Leave);
+            // 
+            // panelTrucks
+            // 
+            this.panelTrucks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            this.panelTrucks.Location = new System.Drawing.Point(48, 87);
+            this.panelTrucks.Name = "panelTrucks";
+            this.panelTrucks.Size = new System.Drawing.Size(183, 2);
+            this.panelTrucks.TabIndex = 7;
+            // 
             // buttonAdd
             // 
             this.buttonAdd.FlatAppearance.BorderSize = 0;
@@ -964,10 +970,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShipping)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransport)).EndInit();
             this.panelData.ResumeLayout(false);
-            this.panelShippingBoxes.ResumeLayout(false);
-            this.panelShippingBoxes.PerformLayout();
             this.panelTransportBoxes.ResumeLayout(false);
             this.panelTransportBoxes.PerformLayout();
+            this.panelShippingBoxes.ResumeLayout(false);
+            this.panelShippingBoxes.PerformLayout();
             this.ResumeLayout(false);
 
         }

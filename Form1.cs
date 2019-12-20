@@ -226,6 +226,7 @@ namespace LogisticProgram
                 buttonChange.FlatAppearance.BorderSize = 0;
                 buttonAdd.FlatAppearance.BorderSize = 1;
                 buttonMake.Text = "Добавить";
+                TextBoxClear();
                 TextBoxEnabled(false);
                 timer1.Enabled = true;
             }
@@ -245,6 +246,7 @@ namespace LogisticProgram
                 buttonChange.FlatAppearance.BorderSize = 0;
                 buttonAdd.FlatAppearance.BorderSize = 0;
                 buttonMake.Text = "Удалить";
+                TextBoxClear();
                 TextBoxEnabled(true);
                 timer1.Enabled = true;
             }
@@ -265,6 +267,7 @@ namespace LogisticProgram
                 buttonChange.FlatAppearance.BorderSize = 1;
                 buttonAdd.FlatAppearance.BorderSize = 0;
                 buttonMake.Text = "Отредактировать";
+                TextBoxClear();
                 TextBoxEnabled(false);
                 timer1.Enabled = true;
             }
@@ -426,94 +429,148 @@ namespace LogisticProgram
             }
         }
 
-        private void buttonMake_Click(object sender, EventArgs e)
+        public bool CheckTextBoxes()
         {
-            //Check textBoxes
-
             bool check = true;
-            if (textBoxNumber.Text == "Гос. номер")
+
+            if (dataGridViewTransport.Top == 95)
             {
-                panelNumber.BackColor = Color.FromArgb(225, 50, 77);
-                check = false;
-            }
-            if (textBoxShipping.Text == "Дата отгрузки" || !Regex.IsMatch(textBoxShipping.Text, @"^\d{4}-\d{2}-\d{2}$"))
-            {
-                panelShipping.BackColor = Color.FromArgb(225, 50, 77);
-                check = false;
-                if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
+                if (textBoxNumber.Text == "Гос. номер")
                 {
-                    panelShipping.BackColor = Color.FromArgb(62, 120, 138);
-                    check = true;
+                    panelNumber.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
                 }
-            }
-            else
-            {
-                string text = Convert.ToString(Regex.Match(textBoxShipping.Text, @"-\d+-"));
-                string month = Convert.ToString(Regex.Match(text, @"\d+"));
-
-                string days = Convert.ToString(Regex.Match(Regex.Match(textBoxShipping.Text, @"-\d+$").ToString(), @"\d+"));
-
-                if (Convert.ToInt32(month) > 12 || Convert.ToInt32(month) < 0)
+                if (textBoxShipping.Text == "Дата отгрузки" || !Regex.IsMatch(textBoxShipping.Text, @"^\d{4}-\d{2}-\d{2}$"))
                 {
                     panelShipping.BackColor = Color.FromArgb(225, 50, 77);
                     check = false;
+                    if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
+                    {
+                        panelShipping.BackColor = Color.FromArgb(62, 120, 138);
+                        check = true;
+                    }
                 }
                 else
                 {
-                    if (Convert.ToInt32(days) > 31 || Convert.ToInt32(days) < 1)
+                    string text = Convert.ToString(Regex.Match(textBoxShipping.Text, @"-\d+-"));
+                    string month = Convert.ToString(Regex.Match(text, @"\d+"));
+
+                    string days = Convert.ToString(Regex.Match(Regex.Match(textBoxShipping.Text, @"-\d+$").ToString(), @"\d+"));
+
+                    if (Convert.ToInt32(month) > 12 || Convert.ToInt32(month) < 0)
                     {
                         panelShipping.BackColor = Color.FromArgb(225, 50, 77);
                         check = false;
                     }
+                    else
+                    {
+                        if (Convert.ToInt32(days) > 31 || Convert.ToInt32(days) < 1)
+                        {
+                            panelShipping.BackColor = Color.FromArgb(225, 50, 77);
+                            check = false;
+                        }
+                    }
                 }
-            }
-            if (textBoxShipped.Text == "Дата выгрузки" || !Regex.IsMatch(textBoxShipped.Text, @"^\d{4}-\d{2}-\d{2}$"))
-            {
-                panelShipped.BackColor = Color.FromArgb(225, 50, 77);
-                check = false;
-                if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
-                {
-                    panelShipped.BackColor = Color.FromArgb(62, 120, 138);
-                    check = true;
-                }
-            }
-            else
-            {
-                string days = Convert.ToString(Regex.Match(Regex.Match(textBoxShipped.Text, @"-\d+$").ToString(), @"\d+"));
-                string month = Convert.ToString(Regex.Match(Regex.Match(textBoxShipped.Text, @"-\d+-").ToString(), @"\d+"));
-                if (Convert.ToInt32(month) > 12 || Convert.ToInt32(month) < 0)
+                if (textBoxShipped.Text == "Дата выгрузки" || !Regex.IsMatch(textBoxShipped.Text, @"^\d{4}-\d{2}-\d{2}$"))
                 {
                     panelShipped.BackColor = Color.FromArgb(225, 50, 77);
                     check = false;
+                    if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
+                    {
+                        panelShipped.BackColor = Color.FromArgb(62, 120, 138);
+                        check = true;
+                    }
                 }
                 else
                 {
-                    if (Convert.ToInt32(days) > 31 || Convert.ToInt32(days) < 1)
+                    string days = Convert.ToString(Regex.Match(Regex.Match(textBoxShipped.Text, @"-\d+$").ToString(), @"\d+"));
+                    string month = Convert.ToString(Regex.Match(Regex.Match(textBoxShipped.Text, @"-\d+-").ToString(), @"\d+"));
+                    if (Convert.ToInt32(month) > 12 || Convert.ToInt32(month) < 0)
                     {
-                        panelShipping.BackColor = Color.FromArgb(225, 50, 77);
+                        panelShipped.BackColor = Color.FromArgb(225, 50, 77);
                         check = false;
                     }
+                    else
+                    {
+                        if (Convert.ToInt32(days) > 31 || Convert.ToInt32(days) < 1)
+                        {
+                            panelShipping.BackColor = Color.FromArgb(225, 50, 77);
+                            check = false;
+                        }
+                    }
+                }
+                if (textBoxWeight.Text == "Вес отгрузки")
+                {
+                    panelWeight.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+                if (textBoxPrice.Text == "Стоимость")
+                {
+                    panelPrice.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+                if (textBoxCurrency.Text == "Валюта")
+                {
+                    panelCurrency.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
                 }
             }
-            if (textBoxWeight.Text == "Вес отгрузки")
+            else if (dataGridViewShipping.Top == 95)
             {
-                panelWeight.BackColor = Color.FromArgb(225, 50, 77);
-                check = false;
-            }
-            if (textBoxPrice.Text == "Стоимость")
-            {
-                panelPrice.BackColor = Color.FromArgb(225, 50, 77);
-                check = false;
-            }
-            if (textBoxCurrency.Text == "Валюта")
-            {
-                panelCurrency.BackColor = Color.FromArgb(225, 50, 77);
-                check = false;
-            }
+                if (textBoxDate.Text == "Дата" || !Regex.IsMatch(textBoxDate.Text, @"^\d{4}-\d{2}-\d{2}$"))
+                {
+                    panelDate.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                    if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
+                    {
+                        panelDate.BackColor = Color.FromArgb(62, 120, 138);
+                        check = true;
+                    }
+                }
+                else
+                {
+                    string days = Convert.ToString(Regex.Match(Regex.Match(textBoxDate.Text, @"-\d+$").ToString(), @"\d+"));
+                    string month = Convert.ToString(Regex.Match(Regex.Match(textBoxDate.Text, @"-\d+-").ToString(), @"\d+"));
+                    if (Convert.ToInt32(month) > 12 || Convert.ToInt32(month) < 0)
+                    {
+                        panelDate.BackColor = Color.FromArgb(225, 50, 77);
+                        check = false;
+                    }
+                    else
+                    {
+                        if (Convert.ToInt32(days) > 31 || Convert.ToInt32(days) < 1)
+                        {
+                            panelDate.BackColor = Color.FromArgb(225, 50, 77);
+                            check = false;
+                        }
+                    }
+                }
 
-            if (check)
+                if (textBoxTrucks.Text == "Отгружено машин")
+                {
+                    panelTrucks.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+
+                if (textBoxShippingWeight.Text == "Отгружено, кг")
+                {
+                    panelShippingWeight.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+
+                if (textBoxPipes.Text == "Отгружено труб, шт")
+                {
+                    panelPipes.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+            }
+            return check;
+        }
+
+        public void AddToDataBase()
+        {
+            if (dataGridViewTransport.Top == 95)
             {
-                //Add to database
                 string number = textBoxNumber.Text;
                 string dateShipping = textBoxShipping.Text;
                 string dateShipped = textBoxShipped.Text;
@@ -563,7 +620,61 @@ namespace LogisticProgram
                     LoadData();
 
                     TextBoxClear();
+                } 
+            }
+            else if (dataGridViewShipping.Top == 95)
+            {
+                string date = textBoxDate.Text;
+                int trucks = Convert.ToInt32(textBoxTrucks.Text);
+                int weight = Convert.ToInt32(textBoxShippingWeight.Text);
+                int pipes = Convert.ToInt32(textBoxPipes.Text);
+
+                if (buttonMake.Text == "Добавить")
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO shipping VALUES (DEFAULT, '{date}', {trucks}, {weight}, {pipes})", conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    LoadData();
+
+                    TextBoxClear();
                 }
+                else if (buttonMake.Text == "Удалить")
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"delete from shipping where \"number\" = {numberForChange}", conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    LoadData();
+
+                    TextBoxClear();
+                }
+                else if (buttonMake.Text == "Отредактировать")
+                {
+                    DateTime dateShipping = DateTime.ParseExact(date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    int days = dateShipping.Day;
+                    int month = dateShipping.Month;
+                    int year = dateShipping.Year;
+
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"update shipping set \"Date\" = '{year}-{month}-{days}', \"Truck count\" = {trucks}, \"Weight\" = {weight}, \"Pipes count\" = {pipes} where \"number\" = {numberForChange}", conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    LoadData();
+
+                    TextBoxClear();
+                }
+            }
+        }
+
+        private void buttonMake_Click(object sender, EventArgs e)
+        {
+            if (CheckTextBoxes())
+            {
+                AddToDataBase();
             }
         }
 
@@ -859,6 +970,11 @@ namespace LogisticProgram
             textBoxPrice.Text = "Стоимость";
             textBoxCurrency.Text = "Валюта";
 
+            textBoxDate.Text = "Дата";
+            textBoxTrucks.Text = "Отгружено машин";
+            textBoxShippingWeight.Text = "Отгружено, кг";
+            textBoxPipes.Text = "Отгружено труб, шт";
+
             foreach (Control pn in Controls)
             {
                 if (pn is Panel)
@@ -919,9 +1035,73 @@ namespace LogisticProgram
             }
         }
 
-        private void dataGridViewTransport_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void textBoxDate_KeyPress(object sender, KeyPressEventArgs e)
         {
+            char ch = e.KeyChar;
 
+            if (!Char.IsDigit(ch) && ch != 45 && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelDate.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxTrucks_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelTrucks.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxShippingWeight_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelShippingWeight.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxPipes_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelPipes.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void dataGridViewShipping_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int index = dataGridViewShipping.CurrentCell.RowIndex;
+            numberForChange = Convert.ToInt32(dataGridViewShipping.Rows[index].Cells[0].Value);
+
+            textBoxDate.Text = Convert.ToString(dataGridViewShipping.Rows[index].Cells[1].Value);
+            textBoxTrucks.Text = Convert.ToString(dataGridViewShipping.Rows[index].Cells[2].Value);
+            textBoxShippingWeight.Text = Convert.ToString(dataGridViewShipping.Rows[index].Cells[3].Value);
+            textBoxPipes.Text = Convert.ToString(dataGridViewShipping.Rows[index].Cells[4].Value);
+
+            ChangeStyleBoxes();
         }
     }
 }
