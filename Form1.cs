@@ -309,7 +309,8 @@ namespace LogisticProgram
             {
                 if (dataGridViewRegistry.Top == 95)
                 {
-                    dataGridViewShipping.Top = 345;
+                    dataGridViewShipping.Top = 380;
+                    labelNameDataBase.Visible = true;
                     dataGridViewShipping.Enabled = false;
                 }
                 ClearSelectDataGrid();
@@ -322,6 +323,7 @@ namespace LogisticProgram
             if (dataGridViewRegistry.Top == 95)
             {
                 dataGridViewShipping.Top = -520;
+                labelNameDataBase.Visible = false;
                 dataGridViewShipping.Enabled = true;
             }
             if (panelTransport.Left != 275)
@@ -651,14 +653,12 @@ namespace LogisticProgram
 
                 if (buttonMake.Text == "Добавить")
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO transport VALUES (DEFAULT, '{number}', '{dateShipping}', '{dateShipped}', {weight}, {price}, '{currency}')", conn);
                     try
                     {
+                        conn.Open();
+                        NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO transport VALUES (DEFAULT, '{number}', '{dateShipping}', '{dateShipped}', {weight}, {price}, '{currency}')", conn);
                         command.ExecuteNonQuery();
 
-                        LoadData();
-                        TextBoxClear();
                     }
                     catch (NpgsqlException e)
                     {
@@ -686,7 +686,13 @@ namespace LogisticProgram
                             }
                         }
                     }
-                    conn.Close();
+                    finally
+                    {
+                        conn.Close();
+
+                        LoadData();
+                        TextBoxClear();
+                    }
                 }
                 else if (buttonMake.Text == "Удалить")
                 {
@@ -723,6 +729,8 @@ namespace LogisticProgram
             }
             else if (dataGridViewShipping.Top == 95)
             {
+                dataGridViewShipping.ClearSelection();
+
                 string date = textBoxDate.Text;
                 int trucks = Convert.ToInt32(textBoxTrucks.Text);
                 int weight = Convert.ToInt32(textBoxShippingWeight.Text);
@@ -769,6 +777,8 @@ namespace LogisticProgram
             }
             else if (dataGridViewRegistry.Top == 95)
             {
+                dataGridViewRegistry.ClearSelection();
+
                 int number = Convert.ToInt32(textBoxNumberShipping.Text);
                 int diameter = Convert.ToInt32(textBoxDiameter.Text);
                 int pipeNumber = Convert.ToInt32(textBoxPipeNumber.Text);
@@ -778,15 +788,11 @@ namespace LogisticProgram
 
                 if (buttonMake.Text == "Добавить")
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO registry VALUES (DEFAULT, {number}, {diameter}, {pipeNumber}, {length}, {thickness}, {weight})", conn);
                     try
                     {
+                        conn.Open();
+                        NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO registry VALUES (DEFAULT, {number}, {diameter}, {pipeNumber}, {length}, {thickness}, {weight})", conn);
                         command.ExecuteNonQuery();
-
-                        LoadData();
-
-                        TextBoxClear();
                     }
                     catch (NpgsqlException e)
                     {
@@ -794,8 +800,30 @@ namespace LogisticProgram
                         {
                             panelNumberShipping.BackColor = Color.FromArgb(225, 50, 77);
                         }
+                        else if (Convert.ToString(Regex.Match(e.Message, @"\d+")) == "23505")
+                        {
+                            panelPipeNumber.BackColor = Color.FromArgb(225, 50, 77);
+
+                            for (int i = 0; i < dataGridViewRegistry.RowCount; i++)
+                            {
+                                if (dataGridViewRegistry.Rows[i].Cells[3].Value != null)
+                                {
+                                    if (dataGridViewRegistry.Rows[i].Cells[3].Value.ToString().Contains(textBoxPipeNumber.Text))
+                                    {
+                                        dataGridViewRegistry.Rows[i].Cells[3].Selected = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
-                    conn.Close();
+                    finally
+                    {
+                        conn.Close();
+
+                        LoadData();
+                        TextBoxClear();
+                    }
                 }
                 else if (buttonMake.Text == "Удалить")
                 {
@@ -1410,6 +1438,7 @@ namespace LogisticProgram
                 (sender as TextBox).Text = defaultText[(sender as TextBox).Name];
                 (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
                 (sender as TextBox).Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+                dataGridViewShipping.ClearSelection();
             }
             else
             {
