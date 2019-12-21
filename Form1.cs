@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace LogisticProgram
 {
@@ -16,6 +17,8 @@ namespace LogisticProgram
         List<Shipping> shipping = new List<Shipping>();
         List<Registry> registry = new List<Registry>();
         int numberForChange = new int();
+        Dictionary<string, string> defaultText = new Dictionary<string, string>();
+
         public void LoadInfo()
         {
             transport.Clear();
@@ -111,6 +114,8 @@ namespace LogisticProgram
             InitializeComponent();
             panelRight.Height = buttonTransport.Height;
             panelRight.Top = buttonTransport.Top;
+            defaultText = DefaultTextBoxes();
+            ClearSelectDataGrid();
         }
 
         private void buttonTransport_Click(object sender, EventArgs e)
@@ -119,6 +124,7 @@ namespace LogisticProgram
             panelRight.Top = buttonTransport.Top;
             panelTransportBoxes.Visible = true;
             panelShippingBoxes.Visible = false;
+            panelRegistryBoxes.Visible = false;
             timerAnimateTransport.Enabled = true;
         }
 
@@ -128,6 +134,7 @@ namespace LogisticProgram
             panelRight.Top = buttonDaily.Top;
             panelTransportBoxes.Visible = false;
             panelShippingBoxes.Visible = true;
+            panelRegistryBoxes.Visible = false;
             timerAnimateShipping.Enabled = true;
         }
 
@@ -135,6 +142,9 @@ namespace LogisticProgram
         {
             panelRight.Height = buttonRegistry.Height;
             panelRight.Top = buttonRegistry.Top;
+            panelTransportBoxes.Visible = false;
+            panelShippingBoxes.Visible = false;
+            panelRegistryBoxes.Visible = true;
             timerAnimateRegistry.Enabled = true;
         }
 
@@ -234,6 +244,7 @@ namespace LogisticProgram
             {
                 buttonAdd.FlatAppearance.BorderSize = 0;
                 TextBoxClear();
+                ClearSelectDataGrid();
                 timer2.Enabled = true;
             }
         }
@@ -254,6 +265,7 @@ namespace LogisticProgram
             {
                 buttonRemove.FlatAppearance.BorderSize = 0;
                 TextBoxClear();
+                ClearSelectDataGrid();
                 TextBoxEnabled(false);
                 timer2.Enabled = true;
             }
@@ -275,8 +287,16 @@ namespace LogisticProgram
             {
                 buttonChange.FlatAppearance.BorderSize = 0;
                 TextBoxClear();
+                ClearSelectDataGrid();
                 timer2.Enabled = true;
             }
+        }
+
+        public void ClearSelectDataGrid()
+        {
+            dataGridViewRegistry.ClearSelection();
+            dataGridViewTransport.ClearSelection();
+            dataGridViewShipping.ClearSelection();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -287,12 +307,23 @@ namespace LogisticProgram
             }
             else
             {
+                if (dataGridViewRegistry.Top == 95)
+                {
+                    dataGridViewShipping.Top = 345;
+                    dataGridViewShipping.Enabled = false;
+                }
+                ClearSelectDataGrid();
                 timer1.Enabled = false;
             }
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            if (dataGridViewRegistry.Top == 95)
+            {
+                dataGridViewShipping.Top = -520;
+                dataGridViewShipping.Enabled = true;
+            }
             if (panelTransport.Left != 275)
             {
                 panelTransport.Left += 5;
@@ -564,6 +595,44 @@ namespace LogisticProgram
                     check = false;
                 }
             }
+            else if (dataGridViewRegistry.Top == 95)
+            {
+                if (textBoxNumberShipping.Text == defaultText["textBoxNumberShipping"])
+                {
+                    panelNumberShipping.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+
+                if (textBoxDiameter.Text == defaultText["textBoxDiameter"])
+                {
+                    panelDiameter.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+
+                if (textBoxPipeNumber.Text == defaultText["textBoxPipeNumber"])
+                {
+                    panelPipeNumber.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+
+                if (textBoxLength.Text == defaultText["textBoxLength"])
+                {
+                    panelLength.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+
+                if (textBoxThickness.Text == defaultText["textBoxThickness"])
+                {
+                    panelThickness.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+
+                if (textBoxPipeWeight.Text == defaultText["textBoxPipeWeight"])
+                {
+                    panelPipeWeight.BackColor = Color.FromArgb(225, 50, 77);
+                    check = false;
+                }
+            }
             return check;
         }
 
@@ -571,6 +640,8 @@ namespace LogisticProgram
         {
             if (dataGridViewTransport.Top == 95)
             {
+                dataGridViewTransport.ClearSelection();
+
                 string number = textBoxNumber.Text;
                 string dateShipping = textBoxShipping.Text;
                 string dateShipped = textBoxShipped.Text;
@@ -582,12 +653,40 @@ namespace LogisticProgram
                 {
                     conn.Open();
                     NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO transport VALUES (DEFAULT, '{number}', '{dateShipping}', '{dateShipped}', {weight}, {price}, '{currency}')", conn);
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+
+                        LoadData();
+                        TextBoxClear();
+                    }
+                    catch (NpgsqlException e)
+                    {
+                        if (Convert.ToString(Regex.Match(e.Message, @"\d+")) == "23505")
+                        {
+                            panelNumber.BackColor = Color.FromArgb(225, 50, 77);
+                            panelShipping.BackColor = Color.FromArgb(225, 50, 77);
+
+                            for (int i = 0; i < dataGridViewTransport.RowCount; i++)
+                            {
+                                if (dataGridViewTransport.Rows[i].Cells[1].Value != null)
+                                {
+                                    if (dataGridViewTransport.Rows[i].Cells[1].Value.ToString().Contains(textBoxNumber.Text))
+                                    {
+                                        DateTime checkDate = DateTime.ParseExact(textBoxShipping.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                                        if (dataGridViewTransport.Rows[i].Cells[2].Value.ToString().Contains($"{checkDate.ToShortDateString()}"))
+                                        {
+                                            dataGridViewTransport.Rows[i].Cells[1].Selected = true;
+                                            dataGridViewTransport.Rows[i].Cells[2].Selected = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     conn.Close();
-
-                    LoadData();
-
-                    TextBoxClear();
                 }
                 else if (buttonMake.Text == "Удалить")
                 {
@@ -620,7 +719,7 @@ namespace LogisticProgram
                     LoadData();
 
                     TextBoxClear();
-                } 
+                }
             }
             else if (dataGridViewShipping.Top == 95)
             {
@@ -660,6 +759,59 @@ namespace LogisticProgram
 
                     conn.Open();
                     NpgsqlCommand command = new NpgsqlCommand($"update shipping set \"Date\" = '{year}-{month}-{days}', \"Truck count\" = {trucks}, \"Weight\" = {weight}, \"Pipes count\" = {pipes} where \"number\" = {numberForChange}", conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    LoadData();
+
+                    TextBoxClear();
+                }
+            }
+            else if (dataGridViewRegistry.Top == 95)
+            {
+                int number = Convert.ToInt32(textBoxNumberShipping.Text);
+                int diameter = Convert.ToInt32(textBoxDiameter.Text);
+                int pipeNumber = Convert.ToInt32(textBoxPipeNumber.Text);
+                int length = Convert.ToInt32(textBoxLength.Text);
+                int thickness = Convert.ToInt32(textBoxThickness.Text);
+                int weight = Convert.ToInt32(textBoxPipeWeight.Text);
+
+                if (buttonMake.Text == "Добавить")
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO registry VALUES (DEFAULT, {number}, {diameter}, {pipeNumber}, {length}, {thickness}, {weight})", conn);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+
+                        LoadData();
+
+                        TextBoxClear();
+                    }
+                    catch (NpgsqlException e)
+                    {
+                        if (Convert.ToString(Regex.Match(e.Message, @"\d+")) == "23503")
+                        {
+                            panelNumberShipping.BackColor = Color.FromArgb(225, 50, 77);
+                        }
+                    }
+                    conn.Close();
+                }
+                else if (buttonMake.Text == "Удалить")
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"delete from registry where \"Personal\" = {numberForChange}", conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    LoadData();
+
+                    TextBoxClear();
+                }
+                else if (buttonMake.Text == "Отредактировать")
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand($"update registry set \"number\" = {number}, \"diameter\" = {diameter}, \"Pipe number\" = {pipeNumber}, \"length\" = {length}, \"thickness\" = {thickness}, \"weight\" = {weight} where \"Personal\" = {numberForChange}", conn);
                     command.ExecuteNonQuery();
                     conn.Close();
 
@@ -833,6 +985,8 @@ namespace LogisticProgram
         private void dataGridViewTransport_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int index = dataGridViewTransport.CurrentCell.RowIndex;
+            int indexColumn = dataGridViewTransport.CurrentCell.ColumnIndex;
+
             numberForChange = Convert.ToInt32(dataGridViewTransport.Rows[index].Cells[0].Value);
 
             textBoxNumber.Text = Convert.ToString(dataGridViewTransport.Rows[index].Cells[1].Value);
@@ -963,17 +1117,7 @@ namespace LogisticProgram
 
         public void TextBoxClear()
         {
-            textBoxNumber.Text = "Гос. номер";
-            textBoxShipping.Text = "Дата отгрузки";
-            textBoxShipped.Text = "Дата выгрузки";
-            textBoxWeight.Text = "Вес отгрузки";
-            textBoxPrice.Text = "Стоимость";
-            textBoxCurrency.Text = "Валюта";
-
-            textBoxDate.Text = "Дата";
-            textBoxTrucks.Text = "Отгружено машин";
-            textBoxShippingWeight.Text = "Отгружено, кг";
-            textBoxPipes.Text = "Отгружено труб, шт";
+            ChangeToDefaultText();
 
             foreach (Control pn in Controls)
             {
@@ -1102,6 +1246,329 @@ namespace LogisticProgram
             textBoxPipes.Text = Convert.ToString(dataGridViewShipping.Rows[index].Cells[4].Value);
 
             ChangeStyleBoxes();
+        }
+
+        public Dictionary<string, string> DefaultTextBoxes()
+        {
+            Dictionary<string, string> defaultText = new Dictionary<string, string>();
+            foreach (Control pn in Controls)
+            {
+                if (pn is Panel)
+                {
+                    foreach (Control el in pn.Controls)
+                    {
+                        if (el is Panel)
+                        {
+                            foreach (Control pn2 in el.Controls)
+                            {
+                                if (pn2 is Panel)
+                                {
+                                    foreach (Control box in pn2.Controls)
+                                    {
+                                        if (Convert.ToString(box.Tag) == "boxes")
+                                        {
+                                            defaultText.Add(box.Name, box.Text);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return defaultText;
+        }
+
+        public void ChangeToDefaultText()
+        {
+            foreach (Control pn in Controls)
+            {
+                if (pn is Panel)
+                {
+                    foreach (Control el in pn.Controls)
+                    {
+                        if (el is Panel)
+                        {
+                            foreach (Control pn2 in el.Controls)
+                            {
+                                if (pn2 is Panel)
+                                {
+                                    foreach (Control box in pn2.Controls)
+                                    {
+                                        if (Convert.ToString(box.Tag) == "boxes")
+                                        {
+                                            box.Text = defaultText[box.Name];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void textBoxNumberShipping_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelNumberShipping.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxDiameter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelDiameter.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxPipeNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelPipeNumber.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxLength_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelLength.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxThickness_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelThickness.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxPipeWeight_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                panelPipeWeight.BackColor = Color.FromArgb(62, 120, 138);
+            }
+        }
+
+        private void textBoxNumberShipping_Enter(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == defaultText[(sender as TextBox).Name])
+            {
+                (sender as TextBox).Text = "";
+                panelNumberShipping.BackColor = Color.FromArgb(62, 120, 138);
+                (sender as TextBox).ForeColor = Color.FromArgb(143, 201, 219);
+                (sender as TextBox).Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxNumberShipping_Leave(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == "")
+            {
+                (sender as TextBox).Text = defaultText[(sender as TextBox).Name];
+                (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
+                (sender as TextBox).Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+            }
+            else
+            {
+                string num = (sender as TextBox).Text;
+                dataGridViewShipping.ClearSelection();
+                for (int i = 0; i < dataGridViewShipping.RowCount; i++)
+                {
+                    if (dataGridViewShipping.Rows[i].Cells[0].Value != null)
+                    {
+                        if (dataGridViewShipping.Rows[i].Cells[0].Value.ToString().Contains(num))
+                        {
+                            dataGridViewShipping.Rows[i].Cells[0].Selected = true;
+                            dataGridViewShipping.Rows[i].Cells[1].Selected = true;
+                            dataGridViewShipping.Rows[i].Cells[2].Selected = true;
+                            dataGridViewShipping.Rows[i].Cells[3].Selected = true;
+                            dataGridViewShipping.Rows[i].Cells[4].Selected = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void textBoxDiameter_Enter(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == defaultText[(sender as TextBox).Name])
+            {
+                (sender as TextBox).Text = "";
+                panelDiameter.BackColor = Color.FromArgb(62, 120, 138);
+                (sender as TextBox).ForeColor = Color.FromArgb(143, 201, 219);
+                (sender as TextBox).Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxDiameter_Leave(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == "")
+            {
+                (sender as TextBox).Text = defaultText[(sender as TextBox).Name];
+                (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
+                (sender as TextBox).Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+            }
+        }
+
+        private void textBoxPipeNumber_Enter(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == defaultText[(sender as TextBox).Name])
+            {
+                (sender as TextBox).Text = "";
+                panelPipeNumber.BackColor = Color.FromArgb(62, 120, 138);
+                (sender as TextBox).ForeColor = Color.FromArgb(143, 201, 219);
+                (sender as TextBox).Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxPipeNumber_Leave(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == "")
+            {
+                (sender as TextBox).Text = defaultText[(sender as TextBox).Name];
+                (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
+                (sender as TextBox).Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+            }
+        }
+
+        private void textBoxLength_Enter(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == defaultText[(sender as TextBox).Name])
+            {
+                (sender as TextBox).Text = "";
+                panelLength.BackColor = Color.FromArgb(62, 120, 138);
+                (sender as TextBox).ForeColor = Color.FromArgb(143, 201, 219);
+                (sender as TextBox).Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxLength_Leave(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == "")
+            {
+                (sender as TextBox).Text = defaultText[(sender as TextBox).Name];
+                (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
+                (sender as TextBox).Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+            }
+        }
+
+        private void textBoxThickness_Enter(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == defaultText[(sender as TextBox).Name])
+            {
+                (sender as TextBox).Text = "";
+                panelThickness.BackColor = Color.FromArgb(62, 120, 138);
+                (sender as TextBox).ForeColor = Color.FromArgb(143, 201, 219);
+                (sender as TextBox).Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxThickness_Leave(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == "")
+            {
+                (sender as TextBox).Text = defaultText[(sender as TextBox).Name];
+                (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
+                (sender as TextBox).Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+            }
+        }
+
+        private void textBoxPipeWeight_Enter(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == defaultText[(sender as TextBox).Name])
+            {
+                (sender as TextBox).Text = "";
+                panelPipeWeight.BackColor = Color.FromArgb(62, 120, 138);
+                (sender as TextBox).ForeColor = Color.FromArgb(143, 201, 219);
+                (sender as TextBox).Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
+            }
+        }
+
+        private void textBoxPipeWeight_Leave(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == "")
+            {
+                (sender as TextBox).Text = defaultText[(sender as TextBox).Name];
+                (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
+                (sender as TextBox).Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
+            }
+        }
+
+        private void dataGridViewRegistry_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int index = dataGridViewRegistry.CurrentCell.RowIndex;
+            numberForChange = Convert.ToInt32(dataGridViewRegistry.Rows[index].Cells[0].Value);
+
+            for (int i = 0; i < dataGridViewShipping.RowCount; i++)
+            {
+                for (int j = 0; j < dataGridViewShipping.ColumnCount; j++)
+                {
+                    if (dataGridViewShipping.Rows[i].Cells[j].Value != null)
+                    {
+                        if (dataGridViewShipping.Rows[i].Cells[j].Value.ToString().Contains(Convert.ToString(dataGridViewRegistry.Rows[index].Cells[1].Value)))
+                        {
+                            textBoxNumberShipping.Text = Convert.ToString(dataGridViewShipping.Rows[i].Cells[0].Value);
+                        }
+                    }
+                }
+            }
+
+            textBoxDiameter.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[2].Value);
+            textBoxPipeNumber.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[3].Value);
+            textBoxLength.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[4].Value);
+            textBoxThickness.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[5].Value);
+            textBoxPipeWeight.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[6].Value);
+
+            ChangeStyleBoxes();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
         }
     }
 }
