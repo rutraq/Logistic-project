@@ -6,7 +6,8 @@ using System.Data.Common;
 using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Runtime.InteropServices;
+using System.Threading;
+using Telegram.Bot.Args;
 
 namespace LogisticProgram
 {
@@ -17,7 +18,22 @@ namespace LogisticProgram
         List<Shipping> shipping = new List<Shipping>();
         List<Registry> registry = new List<Registry>();
         int numberForChange = new int();
+        Telegram telegram = new Telegram();
         Dictionary<string, string> defaultText = new Dictionary<string, string>();
+        private string userMessage = "";
+
+        private void Listen(object sender, MessageEventArgs e)
+        {
+            userMessage += e.Message.Date + ": ";
+            userMessage += e.Message.Chat.FirstName + " ";
+            if (e.Message.Chat.Username != null)
+            {
+                userMessage += $"\"{e.Message.Chat.Username}\" ";
+
+            }
+            userMessage += $"text: {e.Message.Text}";
+            userMessage += "\n";
+        }
 
         public void LoadInfo()
         {
@@ -107,6 +123,8 @@ namespace LogisticProgram
                 }
             }
             conn.Close();
+
+            telegram.registry = registry;
         }
 
         public Form1()
@@ -116,6 +134,8 @@ namespace LogisticProgram
             panelRight.Top = buttonTransport.Top;
             defaultText = DefaultTextBoxes();
             ClearSelectDataGrid();
+            telegram.Bot();
+            telegram.Probe(Listen);
         }
 
         private void buttonTransport_Click(object sender, EventArgs e)
@@ -476,11 +496,13 @@ namespace LogisticProgram
                 if (textBoxShipping.Text == "Дата отгрузки" || !Regex.IsMatch(textBoxShipping.Text, @"^\d{4}-\d{2}-\d{2}$"))
                 {
                     panelShipping.BackColor = Color.FromArgb(225, 50, 77);
-                    check = false;
                     if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
                     {
                         panelShipping.BackColor = Color.FromArgb(62, 120, 138);
-                        check = true;
+                    }
+                    else
+                    {
+                        check = false;
                     }
                 }
                 else
@@ -507,11 +529,13 @@ namespace LogisticProgram
                 if (textBoxShipped.Text == "Дата выгрузки" || !Regex.IsMatch(textBoxShipped.Text, @"^\d{4}-\d{2}-\d{2}$"))
                 {
                     panelShipped.BackColor = Color.FromArgb(225, 50, 77);
-                    check = false;
                     if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
                     {
                         panelShipped.BackColor = Color.FromArgb(62, 120, 138);
-                        check = true;
+                    }
+                    else
+                    {
+                        check = false;
                     }
                 }
                 else
@@ -553,11 +577,13 @@ namespace LogisticProgram
                 if (textBoxDate.Text == "Дата" || !Regex.IsMatch(textBoxDate.Text, @"^\d{4}-\d{2}-\d{2}$"))
                 {
                     panelDate.BackColor = Color.FromArgb(225, 50, 77);
-                    check = false;
                     if (buttonMake.Text == "Удалить" || buttonMake.Text == "Отредактировать")
                     {
                         panelDate.BackColor = Color.FromArgb(62, 120, 138);
-                        check = true;
+                    }
+                    else
+                    {
+                        check = false;
                     }
                 }
                 else
@@ -658,7 +684,10 @@ namespace LogisticProgram
                         conn.Open();
                         NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO transport VALUES (DEFAULT, '{number}', '{dateShipping}', '{dateShipped}', {weight}, {price}, '{currency}')", conn);
                         command.ExecuteNonQuery();
+                        conn.Close();
 
+                        LoadData();
+                        TextBoxClear();
                     }
                     catch (NpgsqlException e)
                     {
@@ -685,13 +714,7 @@ namespace LogisticProgram
                                 }
                             }
                         }
-                    }
-                    finally
-                    {
                         conn.Close();
-
-                        LoadData();
-                        TextBoxClear();
                     }
                 }
                 else if (buttonMake.Text == "Удалить")
@@ -793,6 +816,11 @@ namespace LogisticProgram
                         conn.Open();
                         NpgsqlCommand command = new NpgsqlCommand($"INSERT INTO registry VALUES (DEFAULT, {number}, {diameter}, {pipeNumber}, {length}, {thickness}, {weight})", conn);
                         command.ExecuteNonQuery();
+                        conn.Close();
+
+                        LoadData();
+
+                        TextBoxClear();
                     }
                     catch (NpgsqlException e)
                     {
@@ -816,13 +844,8 @@ namespace LogisticProgram
                                 }
                             }
                         }
-                    }
-                    finally
-                    {
-                        conn.Close();
 
-                        LoadData();
-                        TextBoxClear();
+                        conn.Close();
                     }
                 }
                 else if (buttonMake.Text == "Удалить")
@@ -838,14 +861,42 @@ namespace LogisticProgram
                 }
                 else if (buttonMake.Text == "Отредактировать")
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand($"update registry set \"number\" = {number}, \"diameter\" = {diameter}, \"Pipe number\" = {pipeNumber}, \"length\" = {length}, \"thickness\" = {thickness}, \"weight\" = {weight} where \"Personal\" = {numberForChange}", conn);
-                    command.ExecuteNonQuery();
-                    conn.Close();
+                    try
+                    {
+                        conn.Open();
+                        NpgsqlCommand command = new NpgsqlCommand($"update registry set \"number\" = {number}, \"diameter\" = {diameter}, \"Pipe number\" = {pipeNumber}, \"length\" = {length}, \"thickness\" = {thickness}, \"weight\" = {weight} where \"Personal\" = {numberForChange}", conn);
+                        command.ExecuteNonQuery();
+                        conn.Close();
 
-                    LoadData();
+                        LoadData();
 
-                    TextBoxClear();
+                        TextBoxClear();
+                    }
+                    catch (NpgsqlException e)
+                    {
+                        if (Convert.ToString(Regex.Match(e.Message, @"\d+")) == "23505")
+                        {
+                            panelPipeNumber.BackColor = Color.FromArgb(225, 50, 77);
+
+                            for (int i = 0; i < dataGridViewRegistry.RowCount; i++)
+                            {
+                                if (dataGridViewRegistry.Rows[i].Cells[3].Value != null)
+                                {
+                                    if (dataGridViewRegistry.Rows[i].Cells[3].Value.ToString().Contains(textBoxPipeNumber.Text))
+                                    {
+                                        dataGridViewRegistry.Rows[i].Cells[3].Selected = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else if (Convert.ToString(Regex.Match(e.Message, @"\d+")) == "23503")
+                        {
+                            panelNumberShipping.BackColor = Color.FromArgb(225, 50, 77);
+                        }
+
+                        conn.Close();
+                    }
                 }
             }
         }
@@ -1598,6 +1649,34 @@ namespace LogisticProgram
         private void button2_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
+        }
+
+        int interval = 0;
+        int red = 49, green = 52, blue = 61;
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            if (red != 41)
+            {
+                buttonChange.BackColor = Color.FromArgb(red, green, blue);
+                buttonRemove.BackColor = Color.FromArgb(red, green, blue);
+                buttonAdd.BackColor = Color.FromArgb(red, green, blue);
+                red--;
+                green--;
+                blue--;
+                timer3.Interval = 100;
+            }
+            else
+            {
+                buttonChange.BackColor = Color.FromArgb(41, 44, 51);
+                buttonRemove.BackColor = Color.FromArgb(41, 44, 51);
+                buttonAdd.BackColor = Color.FromArgb(41, 44, 51);
+                timer3.Enabled = false;
+            }
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            timer3.Enabled = true;
         }
     }
 }
