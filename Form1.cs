@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Telegram.Bot.Args;
+using System.IO;
 
 namespace LogisticProgram
 {
@@ -143,34 +144,67 @@ namespace LogisticProgram
             telegram.Probe(Listen);
         }
 
+        public bool CheckTimer()
+        {
+            if (timerAnimateFilter.Enabled || timerAnimateTransport.Enabled || timerAnimateShipping.Enabled || timerAnimateRegistry.Enabled)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private void buttonTransport_Click(object sender, EventArgs e)
         {
-            panelRight.Height = buttonTransport.Height;
-            panelRight.Top = buttonTransport.Top;
-            panelTransportBoxes.Visible = true;
-            panelShippingBoxes.Visible = false;
-            panelRegistryBoxes.Visible = false;
-            timerAnimateTransport.Enabled = true;
+            if (CheckTimer())
+            {
+                if (dataGridViewFilter.Top == 95)
+                {
+                    dataGridViewTransport.Top = 710;
+                    dataGridViewShipping.Top = 1325;
+                    dataGridViewRegistry.Top = 1940;
+                }
+                panelRight.Height = buttonTransport.Height;
+                panelRight.Top = buttonTransport.Top;
+                panelTransportBoxes.Visible = true;
+                panelShippingBoxes.Visible = false;
+                panelRegistryBoxes.Visible = false;
+                timerAnimateTransport.Enabled = true; 
+            }
         }
 
         private void buttonDaily_Click(object sender, EventArgs e)
         {
-            panelRight.Height = buttonDaily.Height;
-            panelRight.Top = buttonDaily.Top;
-            panelTransportBoxes.Visible = false;
-            panelShippingBoxes.Visible = true;
-            panelRegistryBoxes.Visible = false;
-            timerAnimateShipping.Enabled = true;
+            if (CheckTimer())
+            {
+                panelRight.Height = buttonDaily.Height;
+                panelRight.Top = buttonDaily.Top;
+                panelTransportBoxes.Visible = false;
+                panelShippingBoxes.Visible = true;
+                panelRegistryBoxes.Visible = false;
+                timerAnimateShipping.Enabled = true; 
+            }
         }
 
         private void buttonRegistry_Click(object sender, EventArgs e)
         {
-            panelRight.Height = buttonRegistry.Height;
-            panelRight.Top = buttonRegistry.Top;
-            panelTransportBoxes.Visible = false;
-            panelShippingBoxes.Visible = false;
-            panelRegistryBoxes.Visible = true;
-            timerAnimateRegistry.Enabled = true;
+            if (CheckTimer())
+            {
+                if (dataGridViewFilter.Top == 95)
+                {
+                    dataGridViewTransport.Top = -1750;
+                    dataGridViewShipping.Top = -1135;
+                    dataGridViewRegistry.Top = -520;
+                }
+                panelRight.Height = buttonRegistry.Height;
+                panelRight.Top = buttonRegistry.Top;
+                panelTransportBoxes.Visible = false;
+                panelShippingBoxes.Visible = false;
+                panelRegistryBoxes.Visible = true;
+                timerAnimateRegistry.Enabled = true; 
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1007,12 +1041,14 @@ namespace LogisticProgram
                     dataGridViewShipping.Top -= 15;
                     dataGridViewTransport.Top -= 15;
                     dataGridViewRegistry.Top -= 15;
+                    dataGridViewFilter.Top -= 15;
                 }
                 else
                 {
                     dataGridViewShipping.Top += 15;
                     dataGridViewTransport.Top += 15;
                     dataGridViewRegistry.Top += 15;
+                    dataGridViewFilter.Top += 15;
                 }
             }
             else
@@ -1033,12 +1069,15 @@ namespace LogisticProgram
                 {
                     dataGridViewShipping.Top -= 15;
                     dataGridViewTransport.Top -= 15;
+                    dataGridViewRegistry.Top -= 15;
+                    dataGridViewFilter.Top -= 15;
                 }
                 else
                 {
                     dataGridViewShipping.Top += 15;
                     dataGridViewTransport.Top += 15;
                     dataGridViewRegistry.Top += 15;
+                    dataGridViewFilter.Top += 15;
                 }
             }
             else
@@ -1061,12 +1100,14 @@ namespace LogisticProgram
                     dataGridViewShipping.Top -= 15;
                     dataGridViewTransport.Top -= 15;
                     dataGridViewRegistry.Top -= 15;
+                    dataGridViewFilter.Top -= 15;
                 }
                 else
                 {
                     dataGridViewShipping.Top += 15;
                     dataGridViewTransport.Top += 15;
                     dataGridViewRegistry.Top += 15;
+                    dataGridViewFilter.Top += 15;
                 }
             }
             else
@@ -1670,6 +1711,64 @@ namespace LogisticProgram
         }
         int red = 49, green = 52, blue = 61;
         int secondRed = 41, secondGreen = 44, secondBlue = 51;
+
+        private void timerAnimateFilter_Tick(object sender, EventArgs e)
+        {
+            if (dataGridViewFilter.Top != 95)
+            {
+                if (dataGridViewFilter.Top > 95)
+                {
+                    dataGridViewShipping.Top -= 15;
+                    dataGridViewTransport.Top -= 15;
+                    dataGridViewRegistry.Top -= 15;
+                    dataGridViewFilter.Top -= 15;
+                }
+                else
+                {
+                    dataGridViewShipping.Top += 15;
+                    dataGridViewTransport.Top += 15;
+                    dataGridViewRegistry.Top += 15;
+                    dataGridViewFilter.Top += 15;
+                }
+            }
+            else
+            {
+                timerAnimateFilter.Enabled = false;
+            }
+        }
+
+        private void buttonFilter_Click(object sender, EventArgs e)
+        {
+            if (CheckTimer())
+            {
+                if (dataGridViewTransport.Top == 95)
+                {
+                    dataGridViewFilter.Top = -520;
+                }
+                else if (dataGridViewShipping.Top == 95)
+                {
+                    dataGridViewFilter.Top = 1325;
+                }
+                else if (dataGridViewRegistry.Top == 95)
+                {
+                    dataGridViewFilter.Top = 710;
+                }
+                panelRight.Height = buttonFilter.Height;
+                panelRight.Top = buttonFilter.Top;
+                panelTransportBoxes.Visible = false;
+                panelShippingBoxes.Visible = false;
+                panelRegistryBoxes.Visible = false;
+                timerAnimateFilter.Enabled = true; 
+            }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (File.Exists("Save.xlsx"))
+            {
+                File.Delete("Save.xlsx");
+            }
+        }
 
         private void timerSecondAnimation_Tick(object sender, EventArgs e)
         {

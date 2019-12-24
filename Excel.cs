@@ -90,6 +90,7 @@ namespace LogisticProgram
                 ExcelFile.Range r = transportSheet.Cells[1, i] as ExcelFile.Range;
                 r.Font.Bold = true;
                 r.Font.Size = headerFontSize;
+                r.HorizontalAlignment = ExcelFile.XlHAlign.xlHAlignCenter;
                 ExcelFile.Range r2 = transportSheet.Cells[2, i] as ExcelFile.Range;
                 r2.EntireColumn.AutoFit();
                 r2.Font.Size = defautFontSize;
@@ -100,6 +101,7 @@ namespace LogisticProgram
                 ExcelFile.Range r = shippingSheet.Cells[1, i] as ExcelFile.Range;
                 r.Font.Bold = true;
                 r.Font.Size = headerFontSize;
+                r.HorizontalAlignment = ExcelFile.XlHAlign.xlHAlignCenter;
                 ExcelFile.Range r2 = shippingSheet.Cells[2, i] as ExcelFile.Range;
                 r2.EntireColumn.AutoFit();
                 r2.Font.Size = defautFontSize;
@@ -110,6 +112,7 @@ namespace LogisticProgram
                 ExcelFile.Range r = registrySheet.Cells[1, i] as ExcelFile.Range;
                 r.Font.Bold = true;
                 r.Font.Size = headerFontSize;
+                r.HorizontalAlignment = ExcelFile.XlHAlign.xlHAlignCenter;
                 ExcelFile.Range r2 = registrySheet.Cells[2, i] as ExcelFile.Range;
                 r2.EntireColumn.AutoFit();
                 r2.Font.Size = defautFontSize;
