@@ -21,6 +21,7 @@ namespace LogisticProgram
         Telegram telegram = new Telegram();
         Dictionary<string, string> defaultText = new Dictionary<string, string>();
         private string userMessage = "";
+        Excel ex = new Excel();
 
         private void Listen(object sender, MessageEventArgs e)
         {
@@ -125,6 +126,10 @@ namespace LogisticProgram
             conn.Close();
 
             telegram.registry = registry;
+            telegram.Transport = transport;
+            telegram.Shipping = shipping;
+
+            ex.WriteToExcel();
         }
 
         public Form1()
@@ -1013,6 +1018,10 @@ namespace LogisticProgram
             else
             {
                 timerAnimateShipping.Enabled = false;
+                red = 49;
+                green = 52;
+                blue = 61;
+                timerFirstAnimation.Enabled = true;
             }
         }
 
@@ -1035,6 +1044,11 @@ namespace LogisticProgram
             else
             {
                 timerAnimateTransport.Enabled = false;
+
+                red = 49;
+                green = 52;
+                blue = 61;
+                timerFirstAnimation.Enabled = true;
             }
         }
 
@@ -1058,6 +1072,10 @@ namespace LogisticProgram
             else
             {
                 timerAnimateRegistry.Enabled = false;
+                red = 49;
+                green = 52;
+                blue = 61;
+                timerFirstAnimation.Enabled = true;
             }
         }
 
@@ -1650,10 +1668,32 @@ namespace LogisticProgram
         {
             WindowState = FormWindowState.Minimized;
         }
-
-        int interval = 0;
         int red = 49, green = 52, blue = 61;
-        private void timer3_Tick(object sender, EventArgs e)
+        int secondRed = 41, secondGreen = 44, secondBlue = 51;
+
+        private void timerSecondAnimation_Tick(object sender, EventArgs e)
+        {
+            if (secondRed != 49)
+            {
+                buttonChange.BackColor = Color.FromArgb(secondRed, secondGreen, secondBlue);
+                buttonRemove.BackColor = Color.FromArgb(secondRed, secondGreen, secondBlue);
+                buttonAdd.BackColor = Color.FromArgb(secondRed, secondGreen, secondBlue);
+                secondRed++;
+                secondGreen++;
+                secondBlue++;
+                timerSecondAnimation.Interval = 100;
+            }
+            else
+            {
+                buttonChange.BackColor = Color.FromArgb(49, 52, 61);
+                buttonRemove.BackColor = Color.FromArgb(49, 52, 61);
+                buttonAdd.BackColor = Color.FromArgb(49, 52, 61);
+                timerSecondAnimation.Enabled = false;
+                timerFirstAnimation.Enabled = true;
+            }
+        }
+
+        private void timerFirstAnimation_Tick(object sender, EventArgs e)
         {
             if (red != 41)
             {
@@ -1663,20 +1703,19 @@ namespace LogisticProgram
                 red--;
                 green--;
                 blue--;
-                timer3.Interval = 100;
             }
             else
             {
                 buttonChange.BackColor = Color.FromArgb(41, 44, 51);
                 buttonRemove.BackColor = Color.FromArgb(41, 44, 51);
                 buttonAdd.BackColor = Color.FromArgb(41, 44, 51);
-                timer3.Enabled = false;
+                timerFirstAnimation.Enabled = false;
             }
         }
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            timer3.Enabled = true;
+            timerSecondAnimation.Enabled = true;
         }
     }
 }
