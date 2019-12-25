@@ -19,10 +19,12 @@ namespace LogisticProgram
         List<Shipping> shipping = new List<Shipping>();
         List<Registry> registry = new List<Registry>();
         int numberForChange = new int();
-        Telegram telegram = new Telegram();
         Dictionary<string, string> defaultText = new Dictionary<string, string>();
         private string userMessage = "";
+
+        Telegram telegram = new Telegram();
         Excel ex = new Excel();
+        Sql sql = new Sql();
 
         private void Listen(object sender, MessageEventArgs e)
         {
@@ -166,6 +168,9 @@ namespace LogisticProgram
                     dataGridViewShipping.Top = 1325;
                     dataGridViewRegistry.Top = 1940;
                 }
+
+                panelChangeButtons.Visible = true;
+                panelFilterButtons.Visible = false;
                 panelRight.Height = buttonTransport.Height;
                 panelRight.Top = buttonTransport.Top;
                 panelTransportBoxes.Visible = true;
@@ -179,6 +184,8 @@ namespace LogisticProgram
         {
             if (CheckTimer())
             {
+                panelChangeButtons.Visible = true;
+                panelFilterButtons.Visible = false;
                 panelRight.Height = buttonDaily.Height;
                 panelRight.Top = buttonDaily.Top;
                 panelTransportBoxes.Visible = false;
@@ -198,6 +205,9 @@ namespace LogisticProgram
                     dataGridViewShipping.Top = -1135;
                     dataGridViewRegistry.Top = -520;
                 }
+
+                panelChangeButtons.Visible = true;
+                panelFilterButtons.Visible = false;
                 panelRight.Height = buttonRegistry.Height;
                 panelRight.Top = buttonRegistry.Top;
                 panelTransportBoxes.Visible = false;
@@ -284,6 +294,30 @@ namespace LogisticProgram
                 dataGridViewRegistry.Rows[i].Cells[4].Value = el.Length;
                 dataGridViewRegistry.Rows[i].Cells[5].Value = el.Thickness;
                 dataGridViewRegistry.Rows[i].Cells[6].Value = el.Weight;
+                i++;
+            }
+
+            //filter
+            List<int[]> answer = sql.GetTotalShipping();
+            dataGridViewFilter.Columns.Clear();
+            dataGridViewFilter.Columns.AddRange(
+                new DataGridViewTextBoxColumn() { Name = "Column1", HeaderText = "Отгружено машин" },
+                new DataGridViewTextBoxColumn() { Name = "Column2", HeaderText = "Отгруженно, кг" },
+                new DataGridViewTextBoxColumn() { Name = "Column3", HeaderText = "Отгружено труб, шт" }
+                );
+
+            i = 0;
+
+            for (int j = 0; j < answer.Count - 1; j++)
+            {
+                dataGridViewFilter.Rows.Add();
+            }
+
+            foreach (var el in answer)
+            {
+                dataGridViewFilter.Rows[i].Cells[0].Value = el[0];
+                dataGridViewFilter.Rows[i].Cells[1].Value = el[1];
+                dataGridViewFilter.Rows[i].Cells[2].Value = el[2];
                 i++;
             }
         }
@@ -1733,6 +1767,7 @@ namespace LogisticProgram
             }
             else
             {
+                panelFilterButtons.Visible = true;
                 timerAnimateFilter.Enabled = false;
             }
         }
@@ -1753,12 +1788,68 @@ namespace LogisticProgram
                 {
                     dataGridViewFilter.Top = 710;
                 }
+
+                panelChangeButtons.Visible = false;
                 panelRight.Height = buttonFilter.Height;
                 panelRight.Top = buttonFilter.Top;
                 panelTransportBoxes.Visible = false;
                 panelShippingBoxes.Visible = false;
                 panelRegistryBoxes.Visible = false;
                 timerAnimateFilter.Enabled = true; 
+            }
+        }
+
+        private void buttonTotalShipping_Click(object sender, EventArgs e)
+        {
+            List<int[]> answer = sql.GetTotalShipping();
+            dataGridViewFilter.Columns.Clear();
+            dataGridViewFilter.Columns.AddRange(
+                new DataGridViewTextBoxColumn() { Name = "Column1", HeaderText = "Отгружено машин" },
+                new DataGridViewTextBoxColumn() { Name = "Column2", HeaderText = "Отгруженно, кг" },
+                new DataGridViewTextBoxColumn() { Name = "Column3", HeaderText = "Отгружено труб, шт" }
+                );
+
+            int i = 0;
+
+            for (int j = 0; j < answer.Count - 1; j++)
+            {
+                dataGridViewFilter.Rows.Add();
+            }
+
+            foreach (var el in answer)
+            {
+                dataGridViewFilter.Rows[i].Cells[0].Value = el[0];
+                dataGridViewFilter.Rows[i].Cells[1].Value = el[1];
+                dataGridViewFilter.Rows[i].Cells[2].Value = el[2];
+                i++;
+            }
+        }
+
+        private void buttonTotalRegistry_Click(object sender, EventArgs e)
+        {
+            List<int[]> answer = sql.GetTotalRegistry();
+            dataGridViewFilter.Columns.Clear();
+            dataGridViewFilter.Columns.AddRange(
+                new DataGridViewTextBoxColumn() { Name = "Column1", HeaderText = "Общая длина" },
+                new DataGridViewTextBoxColumn() { Name = "Column2", HeaderText = "Общий вес" },
+                new DataGridViewTextBoxColumn() { Name = "Column3", HeaderText = "Средняя длина" },
+                new DataGridViewTextBoxColumn() { Name = "Column4", HeaderText = "Средняя толщина" }
+                );
+
+            int i = 0;
+
+            for (int j = 0; j < answer.Count - 1; j++)
+            {
+                dataGridViewFilter.Rows.Add();
+            }
+
+            foreach (var el in answer)
+            {
+                dataGridViewFilter.Rows[i].Cells[0].Value = el[0];
+                dataGridViewFilter.Rows[i].Cells[1].Value = el[1];
+                dataGridViewFilter.Rows[i].Cells[2].Value = el[2];
+                dataGridViewFilter.Rows[i].Cells[3].Value = el[3];
+                i++;
             }
         }
 
