@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +56,58 @@ namespace LogisticProgram
             }
             conn.Close();
             return query;
+        }
+
+        public void UpdateTransport(List<Transport> transport)
+        {
+            conn.Open();
+
+            foreach(var el in transport)
+            {
+                DateTime date = DateTime.ParseExact(el.DateShipping, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                int days = date.Day;
+                int month = date.Month;
+                int year = date.Year;
+
+                DateTime date2 = DateTime.ParseExact(el.DateShipped, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                int days2 = date2.Day;
+                int month2 = date2.Month;
+                int year2 = date2.Year;
+
+                NpgsqlCommand command = new NpgsqlCommand($"update transport set \"State number\" = '{el.StateNubmer}', \"Date shipping\" = '{year}-{month}-{days}', \"Date shipped\" = '{year2}-{month2}-{days2}', \"Weight\" = {el.Weight}, \"price\" = {el.Price}, \"currency\" = '{el.Currency}' where \"number\" = {el.Number}", conn);
+                command.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
+        public void UpdateShipping(List<Shipping> shipping)
+        {
+            conn.Open();
+
+            foreach (var el in shipping)
+            {
+                DateTime date = DateTime.ParseExact(el.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                int days = date.Day;
+                int month = date.Month;
+                int year = date.Year;
+
+                NpgsqlCommand command = new NpgsqlCommand($"update shipping set \"Date\" = '{year}-{month}-{days}', \"Truck count\" = {el.Trucks}, \"Weight\" = {el.Weight}, \"Pipes count\" = {el.Pipes} where \"number\" = {el.Number}", conn);
+                command.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
+        public void UpdateRegistry(List<Registry> registry)
+        {
+            conn.Open();
+
+            foreach (var el in registry)
+            {
+                NpgsqlCommand command = new NpgsqlCommand($"update registry set \"number\" = {Convert.ToInt32(el.Date)}, \"diameter\" = {el.Diameter}, \"Pipe number\" = {el.PipeNumber}, \"length\" = {el.Length}, \"thickness\" = {el.Thickness}, \"weight\" = {el.Weight} where \"Personal\" = {el.Number}", conn);
+                command.ExecuteNonQuery();
+            }
+
+            conn.Close();
         }
     }
 }

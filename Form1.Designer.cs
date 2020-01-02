@@ -77,6 +77,14 @@
             this.panelRight = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.panelTransport = new System.Windows.Forms.Panel();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.panelChangeButtons = new System.Windows.Forms.Panel();
+            this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonChange = new System.Windows.Forms.Button();
+            this.buttonRemove = new System.Windows.Forms.Button();
+            this.panelFilterButtons = new System.Windows.Forms.Panel();
+            this.buttonTotalRegistry = new System.Windows.Forms.Button();
+            this.buttonTotalShipping = new System.Windows.Forms.Button();
             this.dataGridViewFilter = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -106,8 +114,6 @@
             this.Date_shipped = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonRemove = new System.Windows.Forms.Button();
-            this.buttonChange = new System.Windows.Forms.Button();
             this.panelData = new System.Windows.Forms.Panel();
             this.panelRegistryBoxes = new System.Windows.Forms.Panel();
             this.panelPipeWeight = new System.Windows.Forms.Panel();
@@ -145,7 +151,6 @@
             this.panelShippingWeight = new System.Windows.Forms.Panel();
             this.textBoxPipes = new System.Windows.Forms.TextBox();
             this.panelTrucks = new System.Windows.Forms.Panel();
-            this.buttonAdd = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.timerAnimateShipping = new System.Windows.Forms.Timer(this.components);
@@ -155,13 +160,14 @@
             this.timerFirstAnimation = new System.Windows.Forms.Timer(this.components);
             this.timerSecondAnimation = new System.Windows.Forms.Timer(this.components);
             this.timerAnimateFilter = new System.Windows.Forms.Timer(this.components);
-            this.panelFilterButtons = new System.Windows.Forms.Panel();
-            this.buttonTotalRegistry = new System.Windows.Forms.Button();
-            this.buttonTotalShipping = new System.Windows.Forms.Button();
-            this.panelChangeButtons = new System.Windows.Forms.Panel();
+            this.panelSearch = new System.Windows.Forms.Panel();
+            this.buttonSearchFirst = new System.Windows.Forms.Button();
+            this.buttonSearchSecond = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panelTransport.SuspendLayout();
+            this.panelChangeButtons.SuspendLayout();
+            this.panelFilterButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRegistry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShipping)).BeginInit();
@@ -170,8 +176,7 @@
             this.panelRegistryBoxes.SuspendLayout();
             this.panelTransportBoxes.SuspendLayout();
             this.panelShippingBoxes.SuspendLayout();
-            this.panelFilterButtons.SuspendLayout();
-            this.panelChangeButtons.SuspendLayout();
+            this.panelSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -295,6 +300,7 @@
             // 
             // panelTransport
             // 
+            this.panelTransport.Controls.Add(this.panelSearch);
             this.panelTransport.Controls.Add(this.panelChangeButtons);
             this.panelTransport.Controls.Add(this.panelFilterButtons);
             this.panelTransport.Controls.Add(this.dataGridViewFilter);
@@ -308,6 +314,113 @@
             this.panelTransport.Size = new System.Drawing.Size(1126, 854);
             this.panelTransport.TabIndex = 2;
             this.panelTransport.Tag = "data";
+            // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxSearch.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
+            this.textBoxSearch.Location = new System.Drawing.Point(358, 20);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(149, 21);
+            this.textBoxSearch.TabIndex = 11;
+            this.textBoxSearch.Text = "Поиск";
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
+            this.textBoxSearch.Enter += new System.EventHandler(this.textBoxSearch_Enter);
+            this.textBoxSearch.Leave += new System.EventHandler(this.textBoxSearch_Leave);
+            // 
+            // panelChangeButtons
+            // 
+            this.panelChangeButtons.Controls.Add(this.buttonAdd);
+            this.panelChangeButtons.Controls.Add(this.buttonChange);
+            this.panelChangeButtons.Controls.Add(this.buttonRemove);
+            this.panelChangeButtons.Location = new System.Drawing.Point(165, 9);
+            this.panelChangeButtons.Name = "panelChangeButtons";
+            this.panelChangeButtons.Size = new System.Drawing.Size(581, 80);
+            this.panelChangeButtons.TabIndex = 10;
+            // 
+            // buttonAdd
+            // 
+            this.buttonAdd.FlatAppearance.BorderSize = 0;
+            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAdd.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAdd.Location = new System.Drawing.Point(384, 9);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(182, 63);
+            this.buttonAdd.TabIndex = 3;
+            this.buttonAdd.Tag = "change";
+            this.buttonAdd.Text = "Добавление";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // buttonChange
+            // 
+            this.buttonChange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.buttonChange.FlatAppearance.BorderSize = 0;
+            this.buttonChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonChange.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonChange.Location = new System.Drawing.Point(8, 9);
+            this.buttonChange.Name = "buttonChange";
+            this.buttonChange.Size = new System.Drawing.Size(182, 63);
+            this.buttonChange.TabIndex = 1;
+            this.buttonChange.Tag = "change";
+            this.buttonChange.Text = "Редактирование";
+            this.buttonChange.UseVisualStyleBackColor = false;
+            this.buttonChange.Click += new System.EventHandler(this.buttonChange_Click);
+            // 
+            // buttonRemove
+            // 
+            this.buttonRemove.FlatAppearance.BorderSize = 0;
+            this.buttonRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRemove.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonRemove.Location = new System.Drawing.Point(196, 9);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(182, 63);
+            this.buttonRemove.TabIndex = 2;
+            this.buttonRemove.Tag = "change";
+            this.buttonRemove.Text = "Удаление";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
+            // 
+            // panelFilterButtons
+            // 
+            this.panelFilterButtons.Controls.Add(this.buttonTotalRegistry);
+            this.panelFilterButtons.Controls.Add(this.buttonTotalShipping);
+            this.panelFilterButtons.Location = new System.Drawing.Point(224, 463);
+            this.panelFilterButtons.Name = "panelFilterButtons";
+            this.panelFilterButtons.Size = new System.Drawing.Size(432, 81);
+            this.panelFilterButtons.TabIndex = 9;
+            this.panelFilterButtons.Visible = false;
+            // 
+            // buttonTotalRegistry
+            // 
+            this.buttonTotalRegistry.FlatAppearance.BorderSize = 0;
+            this.buttonTotalRegistry.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonTotalRegistry.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonTotalRegistry.Location = new System.Drawing.Point(191, 10);
+            this.buttonTotalRegistry.Name = "buttonTotalRegistry";
+            this.buttonTotalRegistry.Size = new System.Drawing.Size(182, 63);
+            this.buttonTotalRegistry.TabIndex = 11;
+            this.buttonTotalRegistry.Tag = "";
+            this.buttonTotalRegistry.Text = "Итого реестр";
+            this.buttonTotalRegistry.UseVisualStyleBackColor = true;
+            this.buttonTotalRegistry.Click += new System.EventHandler(this.buttonTotalRegistry_Click);
+            // 
+            // buttonTotalShipping
+            // 
+            this.buttonTotalShipping.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.buttonTotalShipping.FlatAppearance.BorderSize = 0;
+            this.buttonTotalShipping.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonTotalShipping.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonTotalShipping.Location = new System.Drawing.Point(3, 10);
+            this.buttonTotalShipping.Name = "buttonTotalShipping";
+            this.buttonTotalShipping.Size = new System.Drawing.Size(182, 63);
+            this.buttonTotalShipping.TabIndex = 10;
+            this.buttonTotalShipping.Tag = "";
+            this.buttonTotalShipping.Text = "Итого отгрузок";
+            this.buttonTotalShipping.UseVisualStyleBackColor = false;
+            this.buttonTotalShipping.Click += new System.EventHandler(this.buttonTotalShipping_Click);
             // 
             // dataGridViewFilter
             // 
@@ -751,35 +864,6 @@
             this.Price.MinimumWidth = 70;
             this.Price.Name = "Price";
             this.Price.ReadOnly = true;
-            // 
-            // buttonRemove
-            // 
-            this.buttonRemove.FlatAppearance.BorderSize = 0;
-            this.buttonRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRemove.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRemove.Location = new System.Drawing.Point(196, 9);
-            this.buttonRemove.Name = "buttonRemove";
-            this.buttonRemove.Size = new System.Drawing.Size(182, 63);
-            this.buttonRemove.TabIndex = 2;
-            this.buttonRemove.Tag = "change";
-            this.buttonRemove.Text = "Удаление";
-            this.buttonRemove.UseVisualStyleBackColor = true;
-            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
-            // 
-            // buttonChange
-            // 
-            this.buttonChange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.buttonChange.FlatAppearance.BorderSize = 0;
-            this.buttonChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonChange.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonChange.Location = new System.Drawing.Point(8, 9);
-            this.buttonChange.Name = "buttonChange";
-            this.buttonChange.Size = new System.Drawing.Size(182, 63);
-            this.buttonChange.TabIndex = 1;
-            this.buttonChange.Tag = "change";
-            this.buttonChange.Text = "Редактирование";
-            this.buttonChange.UseVisualStyleBackColor = false;
-            this.buttonChange.Click += new System.EventHandler(this.buttonChange_Click);
             // 
             // panelData
             // 
@@ -1265,20 +1349,6 @@
             this.panelTrucks.Size = new System.Drawing.Size(183, 2);
             this.panelTrucks.TabIndex = 7;
             // 
-            // buttonAdd
-            // 
-            this.buttonAdd.FlatAppearance.BorderSize = 0;
-            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAdd.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonAdd.Location = new System.Drawing.Point(384, 9);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(182, 63);
-            this.buttonAdd.TabIndex = 3;
-            this.buttonAdd.Tag = "change";
-            this.buttonAdd.Text = "Добавление";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-            // 
             // timer1
             // 
             this.timer1.Interval = 1;
@@ -1332,54 +1402,44 @@
             this.timerAnimateFilter.Interval = 1;
             this.timerAnimateFilter.Tick += new System.EventHandler(this.timerAnimateFilter_Tick);
             // 
-            // panelFilterButtons
+            // panelSearch
             // 
-            this.panelFilterButtons.Controls.Add(this.buttonTotalRegistry);
-            this.panelFilterButtons.Controls.Add(this.buttonTotalShipping);
-            this.panelFilterButtons.Location = new System.Drawing.Point(224, 463);
-            this.panelFilterButtons.Name = "panelFilterButtons";
-            this.panelFilterButtons.Size = new System.Drawing.Size(432, 81);
-            this.panelFilterButtons.TabIndex = 9;
-            this.panelFilterButtons.Visible = false;
+            this.panelSearch.Controls.Add(this.buttonSearchSecond);
+            this.panelSearch.Controls.Add(this.buttonSearchFirst);
+            this.panelSearch.Controls.Add(this.textBoxSearch);
+            this.panelSearch.Location = new System.Drawing.Point(173, 391);
+            this.panelSearch.Name = "panelSearch";
+            this.panelSearch.Size = new System.Drawing.Size(522, 63);
+            this.panelSearch.TabIndex = 12;
             // 
-            // buttonTotalRegistry
+            // buttonSearchFirst
             // 
-            this.buttonTotalRegistry.FlatAppearance.BorderSize = 0;
-            this.buttonTotalRegistry.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonTotalRegistry.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonTotalRegistry.Location = new System.Drawing.Point(191, 10);
-            this.buttonTotalRegistry.Name = "buttonTotalRegistry";
-            this.buttonTotalRegistry.Size = new System.Drawing.Size(182, 63);
-            this.buttonTotalRegistry.TabIndex = 11;
-            this.buttonTotalRegistry.Tag = "";
-            this.buttonTotalRegistry.Text = "Итого реестр";
-            this.buttonTotalRegistry.UseVisualStyleBackColor = true;
-            this.buttonTotalRegistry.Click += new System.EventHandler(this.buttonTotalRegistry_Click);
+            this.buttonSearchFirst.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.buttonSearchFirst.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchFirst.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonSearchFirst.Location = new System.Drawing.Point(15, 5);
+            this.buttonSearchFirst.Name = "buttonSearchFirst";
+            this.buttonSearchFirst.Size = new System.Drawing.Size(151, 52);
+            this.buttonSearchFirst.TabIndex = 4;
+            this.buttonSearchFirst.Tag = "change";
+            this.buttonSearchFirst.Text = "Дата отгрузки";
+            this.buttonSearchFirst.UseVisualStyleBackColor = false;
+            this.buttonSearchFirst.Click += new System.EventHandler(this.buttonSearchFirst_Click);
             // 
-            // buttonTotalShipping
+            // buttonSearchSecond
             // 
-            this.buttonTotalShipping.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.buttonTotalShipping.FlatAppearance.BorderSize = 0;
-            this.buttonTotalShipping.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonTotalShipping.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonTotalShipping.Location = new System.Drawing.Point(3, 10);
-            this.buttonTotalShipping.Name = "buttonTotalShipping";
-            this.buttonTotalShipping.Size = new System.Drawing.Size(182, 63);
-            this.buttonTotalShipping.TabIndex = 10;
-            this.buttonTotalShipping.Tag = "";
-            this.buttonTotalShipping.Text = "Итого отгрузок";
-            this.buttonTotalShipping.UseVisualStyleBackColor = false;
-            this.buttonTotalShipping.Click += new System.EventHandler(this.buttonTotalShipping_Click);
-            // 
-            // panelChangeButtons
-            // 
-            this.panelChangeButtons.Controls.Add(this.buttonAdd);
-            this.panelChangeButtons.Controls.Add(this.buttonChange);
-            this.panelChangeButtons.Controls.Add(this.buttonRemove);
-            this.panelChangeButtons.Location = new System.Drawing.Point(165, 9);
-            this.panelChangeButtons.Name = "panelChangeButtons";
-            this.panelChangeButtons.Size = new System.Drawing.Size(581, 80);
-            this.panelChangeButtons.TabIndex = 10;
+            this.buttonSearchSecond.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.buttonSearchSecond.FlatAppearance.BorderSize = 0;
+            this.buttonSearchSecond.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchSecond.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonSearchSecond.Location = new System.Drawing.Point(172, 4);
+            this.buttonSearchSecond.Name = "buttonSearchSecond";
+            this.buttonSearchSecond.Size = new System.Drawing.Size(151, 52);
+            this.buttonSearchSecond.TabIndex = 12;
+            this.buttonSearchSecond.Tag = "change";
+            this.buttonSearchSecond.Text = "Гос. номер";
+            this.buttonSearchSecond.UseVisualStyleBackColor = false;
+            this.buttonSearchSecond.Click += new System.EventHandler(this.buttonSearchSecond_Click);
             // 
             // Form1
             // 
@@ -1405,6 +1465,8 @@
             this.panel2.PerformLayout();
             this.panelTransport.ResumeLayout(false);
             this.panelTransport.PerformLayout();
+            this.panelChangeButtons.ResumeLayout(false);
+            this.panelFilterButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRegistry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShipping)).EndInit();
@@ -1416,8 +1478,8 @@
             this.panelTransportBoxes.PerformLayout();
             this.panelShippingBoxes.ResumeLayout(false);
             this.panelShippingBoxes.PerformLayout();
-            this.panelFilterButtons.ResumeLayout(false);
-            this.panelChangeButtons.ResumeLayout(false);
+            this.panelSearch.ResumeLayout(false);
+            this.panelSearch.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1516,6 +1578,10 @@
         private System.Windows.Forms.Button buttonTotalRegistry;
         private System.Windows.Forms.Button buttonTotalShipping;
         private System.Windows.Forms.Panel panelChangeButtons;
+        private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.Panel panelSearch;
+        private System.Windows.Forms.Button buttonSearchSecond;
+        private System.Windows.Forms.Button buttonSearchFirst;
     }
 }
 

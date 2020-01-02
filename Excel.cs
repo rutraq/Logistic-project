@@ -44,7 +44,7 @@ namespace LogisticProgram
             shippingSheet.Rows[1].Columns[5] = "Количество труб";
 
             registrySheet.Rows[1].Columns[1] = "№";
-            registrySheet.Rows[1].Columns[2] = "Дата";
+            registrySheet.Rows[1].Columns[2] = "Номер отгрузки";
             registrySheet.Rows[1].Columns[3] = "Диаметр";
             registrySheet.Rows[1].Columns[4] = "Номер трубы";
             registrySheet.Rows[1].Columns[5] = "Длина";
@@ -75,7 +75,13 @@ namespace LogisticProgram
             for (int i = 0; i < registry.Count; i++)
             {
                 registrySheet.Rows[i + 2].Columns[1] = registry[i].Number;
-                registrySheet.Rows[i + 2].Columns[2] = registry[i].Date;
+                for (int j = 0; j < shipping.Count; j++)
+                {
+                    if (shipping[j].Date == registry[i].Date)
+                    {
+                        registrySheet.Rows[i + 2].Columns[2] = shipping[j].Number; 
+                    }
+                }
                 registrySheet.Rows[i + 2].Columns[3] = registry[i].Diameter;
                 registrySheet.Rows[i + 2].Columns[4] = registry[i].PipeNumber;
                 registrySheet.Rows[i + 2].Columns[5] = registry[i].Length;
@@ -121,6 +127,207 @@ namespace LogisticProgram
             excelapp.AlertBeforeOverwriting = false;
             workbook.SaveAs(path);
             excelapp.Quit();
+        }
+
+        public int CheckSheets(ExcelFile.Worksheet sheet, string table)
+        {
+            int column = -1;
+            int j = 2;
+
+            if (table == "transport")
+            {
+                for (; ; )
+                {
+
+                    if (Convert.ToString(sheet.Rows[j].Columns[1].Value) == null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        for (int i = 1; i <= 7; i++)
+                        {
+                            if (sheet.Rows[j].Columns[i].Value == null)
+                            {
+                                column = i;
+                            }
+                        }
+
+                        j++;
+                    }
+                }
+            }
+            else if (table == "shipping")
+            {
+                for (; ; )
+                {
+
+                    if (Convert.ToString(sheet.Rows[j].Columns[1].Value) == null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        for (int i = 1; i <= 5; i++)
+                        {
+                            if (sheet.Rows[j].Columns[i].Value == null)
+                            {
+                                column = i;
+                            }
+                        }
+
+                        j++;
+                    }
+                }
+            }
+            else if (table == "registry")
+            {
+                for (; ; )
+                {
+
+                    if (Convert.ToString(sheet.Rows[j].Columns[1].Value) == null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        for (int i = 1; i <= 7; i++)
+                        {
+                            if (sheet.Rows[j].Columns[i].Value == null)
+                            {
+                                column = i;
+                            }
+                        }
+
+                        j++;
+                    }
+                }
+            }
+            return column;
+        }
+
+        public List<Transport> LoadFromExcelTransport()
+        {
+            List<Transport> transports = new List<Transport>();
+            string path = Directory.GetCurrentDirectory() + @"\" + "saveFromTelegram.xlsx";
+            ExcelFile.Application excelapp = new ExcelFile.Application();
+            ExcelFile.Workbook workbook = excelapp.Workbooks.Open(path, Type.Missing, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            ExcelFile.Worksheet sheet = (ExcelFile.Worksheet)workbook.Sheets[3];
+            int j = 2;
+            for (; ; )
+            {
+                
+                Transport transport = new Transport();
+
+                if (Convert.ToString(sheet.Rows[j].Columns[1].Value) == null)
+                {
+                    break;
+                }
+                else
+                {
+                    int column = CheckSheets(sheet, "transport");
+                    if (column != -1)
+                    {
+                        throw new Exception("Заполните все поля в таблице транспорт");
+                    }
+                    transport.Number = Convert.ToInt32(sheet.Rows[j].Columns[1].Value);
+                    transport.StateNubmer = Convert.ToString(sheet.Rows[j].Columns[2].Value);
+                    transport.DateShipping = Convert.ToString(sheet.Rows[j].Columns[3].Value);
+                    transport.DateShipped = Convert.ToString(sheet.Rows[j].Columns[4].Value);
+                    transport.Weight = Convert.ToInt32(sheet.Rows[j].Columns[5].Value);
+                    transport.Price = Convert.ToInt32(sheet.Rows[j].Columns[6].Value);
+                    transport.Currency = Convert.ToString(sheet.Rows[j].Columns[7].Value);
+
+                    transports.Add(transport);
+
+                    j++;
+                }
+            }
+            workbook.Close(false, Type.Missing, Type.Missing);
+            excelapp.Quit();
+            return transports;
+        }
+        public List<Shipping> LoadFromExcelShipping()
+        {
+            List<Shipping> shippings = new List<Shipping>();
+            string path = Directory.GetCurrentDirectory() + @"\" + "saveFromTelegram.xlsx";
+            ExcelFile.Application excelapp = new ExcelFile.Application();
+            ExcelFile.Workbook workbook = excelapp.Workbooks.Open(path, Type.Missing, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            ExcelFile.Worksheet sheet = (ExcelFile.Worksheet)workbook.Sheets[2];
+            int j = 2;
+            for (; ; )
+            {
+
+                Shipping shipping = new Shipping();
+
+                if (Convert.ToString(sheet.Rows[j].Columns[1].Value) == null)
+                {
+                    break;
+                }
+                else
+                {
+                    int column = CheckSheets(sheet, "shipping");
+                    if (column != -1)
+                    {
+                        throw new Exception("Заполните все поля в таблице отгрузка по дням");
+                    }
+
+                    shipping.Number = Convert.ToInt32(sheet.Rows[j].Columns[1].Value);
+                    shipping.Date = Convert.ToString(sheet.Rows[j].Columns[2].Value);
+                    shipping.Trucks = Convert.ToInt32(sheet.Rows[j].Columns[3].Value);
+                    shipping.Weight = Convert.ToInt32(sheet.Rows[j].Columns[4].Value);
+                    shipping.Pipes = Convert.ToInt32(sheet.Rows[j].Columns[5].Value);
+
+                    shippings.Add(shipping);
+
+                    j++;
+                }
+            }
+            workbook.Close(false, Type.Missing, Type.Missing);
+            excelapp.Quit();
+            return shippings;
+        }
+        public List<Registry> LoadFromExcelRegistry()
+        {
+            List<Registry> registries = new List<Registry>();
+            string path = Directory.GetCurrentDirectory() + @"\" + "saveFromTelegram.xlsx";
+            ExcelFile.Application excelapp = new ExcelFile.Application();
+            ExcelFile.Workbook workbook = excelapp.Workbooks.Open(path, Type.Missing, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            ExcelFile.Worksheet sheet = (ExcelFile.Worksheet)workbook.Sheets[1];
+            int j = 2;
+            for (; ; )
+            {
+
+                Registry registry = new Registry();
+
+                if (Convert.ToString(sheet.Rows[j].Columns[1].Value) == null)
+                {
+                    break;
+                }
+                else
+                {
+                    int column = CheckSheets(sheet, "registry");
+                    if (column != -1)
+                    {
+                        throw new Exception("Заполните все поля в таблице реестр отгрузки");
+                    }
+
+                    registry.Number = Convert.ToInt32(sheet.Rows[j].Columns[1].Value);
+                    registry.Date = Convert.ToString(sheet.Rows[j].Columns[2].Value);
+                    registry.Diameter = Convert.ToInt32(sheet.Rows[j].Columns[3].Value);
+                    registry.PipeNumber = Convert.ToInt32(sheet.Rows[j].Columns[4].Value);
+                    registry.Length = Convert.ToInt32(sheet.Rows[j].Columns[5].Value);
+                    registry.Thickness = Convert.ToInt32(sheet.Rows[j].Columns[6].Value);
+                    registry.Weight = Convert.ToInt32(sheet.Rows[j].Columns[7].Value);
+
+                    registries.Add(registry);
+
+                    j++;
+                }
+            }
+            workbook.Close(false, Type.Missing, Type.Missing);
+            excelapp.Quit();
+            return registries;
         }
     }
 }

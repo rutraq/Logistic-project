@@ -11,5 +11,10 @@ namespace LogisticProgram
         public decimal Weight { get; set; }
         public int Price { get; set; }
         public string Currency { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Number}, {StateNubmer}, {DateShipping}, {DateShipped}, {Weight}, {Price}, {Currency}\n";
+        }
     }
 }

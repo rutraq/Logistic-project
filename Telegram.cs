@@ -20,11 +20,15 @@ namespace LogisticProgram
                     "/excel - Вывести информацию в Excel\n";
         private static ITelegramBotClient botClient;
 
+        static Excel excel = new Excel();
+        static Sql sql = new Sql();
+
         public static List<Registry> reg = new List<Registry>();
         public static List<Transport> transport = new List<Transport>();
         public static List<Shipping> shipping = new List<Shipping>();
+        public static List<int> updateByFile = new List<int>();
 
-        private static List<string> commands = new List<string>() { "/all_data_bases", "/registry", "/transport", "/shipping", "/excel" };
+        private static List<string> commands = new List<string>() { "/all_data_bases", "/registry", "/transport", "/shipping", "/excel", "/update" };
 
         public List<Registry> registry { get => reg; set => reg = value; }
         public List<Transport> Transport { get => transport; set => transport = value; }
@@ -43,9 +47,56 @@ namespace LogisticProgram
         public static async void Message(object sender, MessageEventArgs e)
         {
             var text = e?.Message?.Text;
+            var document = e?.Message?.Document?.FileId;
 
-            if (text == null)
+            if (text == null || document != null)
             {
+                if (updateByFile.Contains(Convert.ToInt32(e.Message.Chat.Id)))
+                {
+                    await botClient.SendTextMessageAsync(
+                                chatId: e.Message.Chat,
+                                text: "Файл обрабатывается"
+                                );
+                    var file = await botClient.GetFileAsync(document);
+                    FileStream fs2 = new FileStream("saveFromTelegram.xlsx", FileMode.Create);
+                    await botClient.DownloadFileAsync(file.FilePath, fs2);
+                    fs2.Close();
+                    fs2.Dispose();
+
+                    try
+                    {
+                        sql.UpdateTransport(excel.LoadFromExcelTransport());
+                        sql.UpdateShipping(excel.LoadFromExcelShipping());
+                        sql.UpdateRegistry(excel.LoadFromExcelRegistry());
+
+                        await botClient.SendTextMessageAsync(
+                                chatId: e.Message.Chat,
+                                text: "Файл обработан, идёт загрузка в базу данных"
+                                );
+                        await botClient.SendTextMessageAsync(
+                                    chatId: e.Message.Chat,
+                                    text: "Информация загружена"
+                                    );
+                        Form1 f = new Form1();
+                        f.LoadData();
+
+                        updateByFile.Remove(Convert.ToInt32(e.Message.Chat.Id));
+                    }
+                    catch (Exception ex)
+                    {
+                        await botClient.SendTextMessageAsync(
+                                    chatId: e.Message.Chat,
+                                    text: ex.Message
+                                    );
+                    }
+                }
+                else
+                {
+                    await botClient.SendTextMessageAsync(
+                    chatId: e.Message.Chat,
+                    text: startText
+                    );
+                }
                 return;
             }
             else if (!commands.Contains(text))
@@ -100,8 +151,27 @@ namespace LogisticProgram
                         chatId: e.Message.Chat,
                         document: inputOnlineFile
                         );
+                    fs.Close();
+                    fs.Dispose();
                 }
-                File.Delete("Save.xlsx");
+            }
+            else if (text == "/update")
+            {
+                updateByFile.Add(Convert.ToInt32(e.Message.Chat.Id));
+                await botClient.SendTextMessageAsync(
+                    chatId: e.Message.Chat,
+                    text: "Отредактируйте файл Excel для обновления базы данных"
+                    );
+                using (FileStream fs = File.OpenRead("Save.xlsx"))
+                {
+                    InputOnlineFile inputOnlineFile = new InputOnlineFile(fs, "Info.xlsx");
+                    await botClient.SendDocumentAsync(
+                        chatId: e.Message.Chat,
+                        document: inputOnlineFile
+                        );
+                    fs.Close();
+                    fs.Dispose();
+                }
             }
         }
 
@@ -117,7 +187,7 @@ namespace LogisticProgram
                 info += $" Номер: {el.Number}\n Дата: {el.Date}\n Номер трубы: {el.PipeNumber}\n Длина: {el.Length}\n Толщина: {el.Thickness}\n Вес: {el.Weight}\n";
                 if (i != reg.Count)
                 {
-                    info += "-------------------------------------------------------\n"; 
+                    info += "-------------------------------------------------------\n";
                 }
                 i++;
             }

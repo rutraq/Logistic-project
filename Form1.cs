@@ -46,93 +46,105 @@ namespace LogisticProgram
             registry.Clear();
 
             // Таблица машины
-            conn.Open();
-            NpgsqlCommand command = new NpgsqlCommand("select * from Transport", conn);
-            NpgsqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows)
+            try
             {
-                foreach (DbDataRecord record in reader)
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand("select * from Transport", conn);
+                NpgsqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
                 {
-                    try
+                    foreach (DbDataRecord record in reader)
                     {
-                        transport.Add(new Transport
+                        try
+                        {
+                            transport.Add(new Transport
+                            {
+                                Number = Convert.ToInt32(record["Number"]),
+                                StateNubmer = Convert.ToString(record["State number"]),
+                                DateShipping = Convert.ToDateTime(record["Date shipping"]).ToShortDateString(),
+                                DateShipped = Convert.ToDateTime(record["date shipped"]).ToShortDateString(),
+                                Weight = Convert.ToDecimal(record["Weight"], CultureInfo.InvariantCulture),
+                                Price = Convert.ToInt32(record["Price"]),
+                                Currency = Convert.ToString(record["Currency"])
+                            });
+                        }
+                        catch (InvalidCastException)
+                        {
+                            transport.Add(new Transport
+                            {
+                                Number = Convert.ToInt32(record["Number"]),
+                                StateNubmer = Convert.ToString(record["State number"]),
+                                DateShipping = Convert.ToDateTime(record["Date shipping"]).ToShortDateString(),
+                                DateShipped = Convert.ToString(record["date shipped"]),
+                                Weight = Convert.ToDecimal(record["Weight"], CultureInfo.InvariantCulture),
+                                Price = Convert.ToInt32(record["Price"]),
+                                Currency = Convert.ToString(record["Currency"])
+                            });
+                        }
+                    }
+                }
+                conn.Close();
+
+                //Таблица отгрузка
+                conn.Open();
+                command = new NpgsqlCommand("select * from Shipping", conn);
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    foreach (DbDataRecord record in reader)
+                    {
+                        shipping.Add(new Shipping
                         {
                             Number = Convert.ToInt32(record["Number"]),
-                            StateNubmer = Convert.ToString(record["State number"]),
-                            DateShipping = Convert.ToDateTime(record["Date shipping"]).ToShortDateString(),
-                            DateShipped = Convert.ToDateTime(record["date shipped"]).ToShortDateString(),
-                            Weight = Convert.ToDecimal(record["Weight"], CultureInfo.InvariantCulture),
-                            Price = Convert.ToInt32(record["Price"]),
-                            Currency = Convert.ToString(record["Currency"])
+                            Date = Convert.ToDateTime(record["Date"]).ToShortDateString(),
+                            Trucks = Convert.ToInt32(record["Truck count"]),
+                            Weight = Convert.ToInt32(record["Weight"]),
+                            Pipes = Convert.ToInt32(record["Pipes count"]),
                         });
                     }
-                    catch (InvalidCastException)
+                }
+                conn.Close();
+
+                //Таблица реестр
+                conn.Open();
+                command = new NpgsqlCommand("select \"Personal\", \"Date\", Diameter, \"Pipe number\", Length, Thickness, Registry.Weight from Registry join Shipping using (Number)", conn);
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    foreach (DbDataRecord record in reader)
                     {
-                        transport.Add(new Transport
+                        registry.Add(new Registry
                         {
-                            Number = Convert.ToInt32(record["Number"]),
-                            StateNubmer = Convert.ToString(record["State number"]),
-                            DateShipping = Convert.ToDateTime(record["Date shipping"]).ToShortDateString(),
-                            DateShipped = Convert.ToString(record["date shipped"]),
-                            Weight = Convert.ToDecimal(record["Weight"], CultureInfo.InvariantCulture),
-                            Price = Convert.ToInt32(record["Price"]),
-                            Currency = Convert.ToString(record["Currency"])
+                            Number = Convert.ToInt32(record["Personal"]),
+                            Date = Convert.ToDateTime(record["Date"]).ToShortDateString(),
+                            Diameter = Convert.ToInt32(record["Diameter"]),
+                            PipeNumber = Convert.ToInt32(record["Pipe number"]),
+                            Length = Convert.ToInt32(record["Length"]),
+                            Thickness = Convert.ToInt32(record["Thickness"]),
+                            Weight = Convert.ToInt32(record["Weight"])
                         });
                     }
                 }
-            }
-            conn.Close();
+                conn.Close();
 
-            //Таблица отгрузка
-            conn.Open();
-            command = new NpgsqlCommand("select * from Shipping", conn);
-            reader = command.ExecuteReader();
+                telegram.registry = registry;
+                telegram.Transport = transport;
+                telegram.Shipping = shipping;
 
-            if (reader.HasRows)
-            {
-                foreach (DbDataRecord record in reader)
+                if (File.Exists("Save.xlsx"))
                 {
-                    shipping.Add(new Shipping
-                    {
-                        Number = Convert.ToInt32(record["Number"]),
-                        Date = Convert.ToDateTime(record["Date"]).ToShortDateString(),
-                        Trucks = Convert.ToInt32(record["Truck count"]),
-                        Weight = Convert.ToInt32(record["Weight"]),
-                        Pipes = Convert.ToInt32(record["Pipes count"]),
-                    });
+                    File.Delete("Save.xlsx");
                 }
+                ex.WriteToExcel();
             }
-            conn.Close();
-
-            //Таблица реестр
-            conn.Open();
-            command = new NpgsqlCommand("select \"Personal\", \"Date\", Diameter, \"Pipe number\", Length, Thickness, Registry.Weight from Registry join Shipping using (Number)", conn);
-            reader = command.ExecuteReader();
-
-            if (reader.HasRows)
+            catch (System.Net.Sockets.SocketException)
             {
-                foreach (DbDataRecord record in reader)
-                {
-                    registry.Add(new Registry
-                    {
-                        Number = Convert.ToInt32(record["Personal"]),
-                        Date = Convert.ToDateTime(record["Date"]).ToShortDateString(),
-                        Diameter = Convert.ToInt32(record["Diameter"]),
-                        PipeNumber = Convert.ToInt32(record["Pipe number"]),
-                        Length = Convert.ToInt32(record["Length"]),
-                        Thickness = Convert.ToInt32(record["Thickness"]),
-                        Weight = Convert.ToInt32(record["Weight"])
-                    });
-                }
+                MessageBox.Show("Интернет соединение отсутствует");
+                Application.Exit();
             }
-            conn.Close();
-
-            telegram.registry = registry;
-            telegram.Transport = transport;
-            telegram.Shipping = shipping;
-
-            ex.WriteToExcel();
         }
 
         public Form1()
@@ -169,6 +181,9 @@ namespace LogisticProgram
                     dataGridViewRegistry.Top = 1940;
                 }
 
+                panelSearch.Visible = false;
+                buttonSearchFirst.Text = "Дата отгрузки";
+                buttonSearchSecond.Text = "Гос. номер";
                 panelChangeButtons.Visible = true;
                 panelFilterButtons.Visible = false;
                 panelRight.Height = buttonTransport.Height;
@@ -176,7 +191,7 @@ namespace LogisticProgram
                 panelTransportBoxes.Visible = true;
                 panelShippingBoxes.Visible = false;
                 panelRegistryBoxes.Visible = false;
-                timerAnimateTransport.Enabled = true; 
+                timerAnimateTransport.Enabled = true;
             }
         }
 
@@ -184,6 +199,9 @@ namespace LogisticProgram
         {
             if (CheckTimer())
             {
+                panelSearch.Visible = false;
+                buttonSearchFirst.Text = "Дата отгрузки";
+                buttonSearchSecond.Text = "Количество машин";
                 panelChangeButtons.Visible = true;
                 panelFilterButtons.Visible = false;
                 panelRight.Height = buttonDaily.Height;
@@ -191,7 +209,7 @@ namespace LogisticProgram
                 panelTransportBoxes.Visible = false;
                 panelShippingBoxes.Visible = true;
                 panelRegistryBoxes.Visible = false;
-                timerAnimateShipping.Enabled = true; 
+                timerAnimateShipping.Enabled = true;
             }
         }
 
@@ -206,6 +224,9 @@ namespace LogisticProgram
                     dataGridViewRegistry.Top = -520;
                 }
 
+                panelSearch.Visible = false;
+                buttonSearchFirst.Text = "Диаметр";
+                buttonSearchSecond.Text = "Номер трубы";
                 panelChangeButtons.Visible = true;
                 panelFilterButtons.Visible = false;
                 panelRight.Height = buttonRegistry.Height;
@@ -213,7 +234,7 @@ namespace LogisticProgram
                 panelTransportBoxes.Visible = false;
                 panelShippingBoxes.Visible = false;
                 panelRegistryBoxes.Visible = true;
-                timerAnimateRegistry.Enabled = true; 
+                timerAnimateRegistry.Enabled = true;
             }
         }
 
@@ -1087,6 +1108,7 @@ namespace LogisticProgram
             }
             else
             {
+                panelSearch.Visible = true;
                 timerAnimateShipping.Enabled = false;
                 red = 49;
                 green = 52;
@@ -1116,8 +1138,8 @@ namespace LogisticProgram
             }
             else
             {
+                panelSearch.Visible = true;
                 timerAnimateTransport.Enabled = false;
-
                 red = 49;
                 green = 52;
                 blue = 61;
@@ -1146,6 +1168,7 @@ namespace LogisticProgram
             }
             else
             {
+                panelSearch.Visible = true;
                 timerAnimateRegistry.Enabled = false;
                 red = 49;
                 green = 52;
@@ -1789,13 +1812,14 @@ namespace LogisticProgram
                     dataGridViewFilter.Top = 710;
                 }
 
+                panelSearch.Visible = false;
                 panelChangeButtons.Visible = false;
                 panelRight.Height = buttonFilter.Height;
                 panelRight.Top = buttonFilter.Top;
                 panelTransportBoxes.Visible = false;
                 panelShippingBoxes.Visible = false;
                 panelRegistryBoxes.Visible = false;
-                timerAnimateFilter.Enabled = true; 
+                timerAnimateFilter.Enabled = true;
             }
         }
 
@@ -1850,6 +1874,158 @@ namespace LogisticProgram
                 dataGridViewFilter.Rows[i].Cells[2].Value = el[2];
                 dataGridViewFilter.Rows[i].Cells[3].Value = el[3];
                 i++;
+            }
+        }
+
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            string search = "";
+            if ((sender as TextBox).Text != "Поиск")
+            {
+                search = (sender as TextBox).Text;
+            }
+            if (dataGridViewTransport.Top == 95)
+            {
+                dataGridViewTransport.Rows.Clear();
+                int i = 0;
+
+                foreach (Transport el in transport)
+                {
+                    if (el.DateShipping.StartsWith(search) && buttonSearchFirst.FlatAppearance.BorderSize == 1)
+                    {
+                        dataGridViewTransport.Rows.Add();
+
+                        dataGridViewTransport.Rows[i].Cells[0].Value = el.Number;
+                        dataGridViewTransport.Rows[i].Cells[1].Value = el.StateNubmer;
+                        dataGridViewTransport.Rows[i].Cells[2].Value = el.DateShipping;
+                        dataGridViewTransport.Rows[i].Cells[3].Value = el.DateShipped;
+                        dataGridViewTransport.Rows[i].Cells[4].Value = el.Weight;
+                        dataGridViewTransport.Rows[i].Cells[5].Value = $"{el.Price} {el.Currency}";
+                        i++;
+                    }
+                    else if (el.StateNubmer.StartsWith(search) && buttonSearchSecond.FlatAppearance.BorderSize == 1)
+                    {
+                        dataGridViewTransport.Rows.Add();
+
+                        dataGridViewTransport.Rows[i].Cells[0].Value = el.Number;
+                        dataGridViewTransport.Rows[i].Cells[1].Value = el.StateNubmer;
+                        dataGridViewTransport.Rows[i].Cells[2].Value = el.DateShipping;
+                        dataGridViewTransport.Rows[i].Cells[3].Value = el.DateShipped;
+                        dataGridViewTransport.Rows[i].Cells[4].Value = el.Weight;
+                        dataGridViewTransport.Rows[i].Cells[5].Value = $"{el.Price} {el.Currency}";
+                        i++;
+                    }
+                }
+            }
+            else if (dataGridViewShipping.Top == 95)
+            {
+                dataGridViewShipping.Rows.Clear();
+                int i = 0;
+
+                foreach (Shipping el in shipping)
+                {
+                    if (el.Date.StartsWith(search) && buttonSearchFirst.FlatAppearance.BorderSize == 1)
+                    {
+                        dataGridViewShipping.Rows.Add();
+
+                        dataGridViewShipping.Rows[i].Cells[0].Value = el.Number;
+                        dataGridViewShipping.Rows[i].Cells[1].Value = el.Date;
+                        dataGridViewShipping.Rows[i].Cells[2].Value = el.Trucks;
+                        dataGridViewShipping.Rows[i].Cells[3].Value = el.Weight;
+                        dataGridViewShipping.Rows[i].Cells[4].Value = el.Pipes;
+                        i++;
+                    }
+                    else if (el.Trucks.ToString().StartsWith(search) && buttonSearchSecond.FlatAppearance.BorderSize == 1)
+                    {
+                        dataGridViewShipping.Rows.Add();
+
+                        dataGridViewShipping.Rows[i].Cells[0].Value = el.Number;
+                        dataGridViewShipping.Rows[i].Cells[1].Value = el.Date;
+                        dataGridViewShipping.Rows[i].Cells[2].Value = el.Trucks;
+                        dataGridViewShipping.Rows[i].Cells[3].Value = el.Weight;
+                        dataGridViewShipping.Rows[i].Cells[4].Value = el.Pipes;
+                        i++;
+                    }
+                }
+            }
+            else if (dataGridViewRegistry.Top == 95)
+            {
+                dataGridViewRegistry.Rows.Clear();
+                int i = 0;
+
+                foreach (Registry el in registry)
+                {
+                    if (el.Diameter.ToString().StartsWith(search) && buttonSearchFirst.FlatAppearance.BorderSize == 1)
+                    {
+                        dataGridViewRegistry.Rows.Add();
+
+                        dataGridViewRegistry.Rows[i].Cells[0].Value = el.Number;
+                        dataGridViewRegistry.Rows[i].Cells[1].Value = el.Date;
+                        dataGridViewRegistry.Rows[i].Cells[2].Value = el.Diameter;
+                        dataGridViewRegistry.Rows[i].Cells[3].Value = el.PipeNumber;
+                        dataGridViewRegistry.Rows[i].Cells[4].Value = el.Length;
+                        dataGridViewRegistry.Rows[i].Cells[5].Value = el.Thickness;
+                        dataGridViewRegistry.Rows[i].Cells[6].Value = el.Weight;
+                        i++; 
+                    }
+                    else if (el.PipeNumber.ToString().StartsWith(search) && buttonSearchSecond.FlatAppearance.BorderSize == 1)
+                    {
+                        dataGridViewRegistry.Rows.Add();
+
+                        dataGridViewRegistry.Rows[i].Cells[0].Value = el.Number;
+                        dataGridViewRegistry.Rows[i].Cells[1].Value = el.Date;
+                        dataGridViewRegistry.Rows[i].Cells[2].Value = el.Diameter;
+                        dataGridViewRegistry.Rows[i].Cells[3].Value = el.PipeNumber;
+                        dataGridViewRegistry.Rows[i].Cells[4].Value = el.Length;
+                        dataGridViewRegistry.Rows[i].Cells[5].Value = el.Thickness;
+                        dataGridViewRegistry.Rows[i].Cells[6].Value = el.Weight;
+                        i++;
+                    }
+                }
+            }
+        }
+
+        private void textBoxSearch_Enter(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == "Поиск")
+            {
+                (sender as TextBox).Text = "";
+                (sender as TextBox).ForeColor = Color.FromArgb(143, 201, 219);
+                (sender as TextBox).Font = new Font((sender as TextBox).Font.Name, 11, (sender as TextBox).Font.Style);
+            }
+        }
+
+        private void textBoxSearch_Leave(object sender, EventArgs e)
+        {
+            if ((sender as TextBox).Text == "")
+            {
+                (sender as TextBox).Text = "Поиск";
+                (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
+                (sender as TextBox).Font = new Font((sender as TextBox).Font.Name, 10, (sender as TextBox).Font.Style);
+            }
+        }
+
+        private void buttonSearchFirst_Click(object sender, EventArgs e)
+        {
+            if (buttonSearchFirst.FlatAppearance.BorderSize == 0)
+            {
+                buttonSearchFirst.FlatAppearance.BorderSize = 1;
+                buttonSearchSecond.FlatAppearance.BorderSize = 0;
+                textBoxSearch.Text = "Поиск";
+                textBoxSearch.ForeColor = Color.FromArgb(125, 125, 125);
+                textBoxSearch.Font = new Font(textBoxSearch.Font.Name, 10, textBoxSearch.Font.Style);
+            }
+        }
+
+        private void buttonSearchSecond_Click(object sender, EventArgs e)
+        {
+            if (buttonSearchSecond.FlatAppearance.BorderSize == 0)
+            {
+                buttonSearchFirst.FlatAppearance.BorderSize = 0;
+                buttonSearchSecond.FlatAppearance.BorderSize = 1;
+                textBoxSearch.Text = "Поиск";
+                textBoxSearch.ForeColor = Color.FromArgb(125, 125, 125);
+                textBoxSearch.Font = new Font(textBoxSearch.Font.Name, 10, textBoxSearch.Font.Style);
             }
         }
 
