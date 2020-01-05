@@ -41,6 +41,25 @@ namespace LogisticProgram
             conn.Close();
             return query;
         }
+        public Dictionary<string, int> GetTotalPrice()
+        {
+            conn.Open();
+            NpgsqlCommand command = new NpgsqlCommand("select Currency, sum(price) as price from Transport group by Currency", conn);
+            NpgsqlDataReader reader = command.ExecuteReader();
+
+            Dictionary<string, int> price = new Dictionary<string, int>();
+
+            if (reader.HasRows)
+            {
+                foreach (DbDataRecord record in reader)
+                {
+                    price.Add(Convert.ToString(record["currency"]), Convert.ToInt32(record["price"]));
+                }
+            }
+
+            conn.Close();
+            return price;
+        }
         public List<int[]> GetTotalRegistry()
         {
             conn.Open();

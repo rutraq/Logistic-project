@@ -322,7 +322,8 @@ namespace LogisticProgram
             dataGridViewFilter.Columns.AddRange(
                 new DataGridViewTextBoxColumn() { Name = "Column1", HeaderText = "Отгружено машин" },
                 new DataGridViewTextBoxColumn() { Name = "Column2", HeaderText = "Отгруженно, кг" },
-                new DataGridViewTextBoxColumn() { Name = "Column3", HeaderText = "Отгружено труб, шт" }
+                new DataGridViewTextBoxColumn() { Name = "Column3", HeaderText = "Отгружено труб, шт" },
+                new DataGridViewTextBoxColumn() { Name = "Column4", HeaderText = "Оплачено за траспорт, BYN" }
                 );
 
             i = 0;
@@ -339,6 +340,9 @@ namespace LogisticProgram
                 dataGridViewFilter.Rows[i].Cells[2].Value = el[2];
                 i++;
             }
+
+            Requests requests = new Requests();
+            dataGridViewFilter.Rows[0].Cells[3].Value = requests.ConvertPrice(sql.GetTotalPrice());
         }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
@@ -751,12 +755,6 @@ namespace LogisticProgram
                     panelThickness.BackColor = Color.FromArgb(225, 50, 77);
                     check = false;
                 }
-
-                if (textBoxPipeWeight.Text == defaultText["textBoxPipeWeight"])
-                {
-                    panelPipeWeight.BackColor = Color.FromArgb(225, 50, 77);
-                    check = false;
-                }
             }
             return check;
         }
@@ -772,7 +770,7 @@ namespace LogisticProgram
                 string dateShipped = textBoxShipped.Text;
                 decimal weight = Convert.ToDecimal(textBoxWeight.Text, CultureInfo.InvariantCulture);
                 int price = Convert.ToInt32(textBoxPrice.Text);
-                string currency = textBoxCurrency.Text;
+                string currency = textBoxCurrency.Text.ToUpper();
 
                 if (buttonMake.Text == "Добавить")
                 {
@@ -1581,16 +1579,7 @@ namespace LogisticProgram
 
         private void textBoxPipeWeight_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char ch = e.KeyChar;
-
-            if (!Char.IsDigit(ch) && ch != 8)
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                panelPipeWeight.BackColor = Color.FromArgb(62, 120, 138);
-            }
+            
         }
 
         private void textBoxNumberShipping_Enter(object sender, EventArgs e)
@@ -1721,23 +1710,12 @@ namespace LogisticProgram
 
         private void textBoxPipeWeight_Enter(object sender, EventArgs e)
         {
-            if ((sender as TextBox).Text == defaultText[(sender as TextBox).Name])
-            {
-                (sender as TextBox).Text = "";
-                panelPipeWeight.BackColor = Color.FromArgb(62, 120, 138);
-                (sender as TextBox).ForeColor = Color.FromArgb(143, 201, 219);
-                (sender as TextBox).Font = new Font(textBoxShipped.Font.Name, 11, textBoxShipped.Font.Style);
-            }
+            
         }
 
         private void textBoxPipeWeight_Leave(object sender, EventArgs e)
         {
-            if ((sender as TextBox).Text == "")
-            {
-                (sender as TextBox).Text = defaultText[(sender as TextBox).Name];
-                (sender as TextBox).ForeColor = Color.FromArgb(125, 125, 125);
-                (sender as TextBox).Font = new Font(textBoxNumber.Font.Name, 10, textBoxNumber.Font.Style);
-            }
+           
         }
 
         private void dataGridViewRegistry_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -1763,7 +1741,6 @@ namespace LogisticProgram
             textBoxPipeNumber.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[3].Value);
             textBoxLength.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[4].Value);
             textBoxThickness.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[5].Value);
-            textBoxPipeWeight.Text = Convert.ToString(dataGridViewRegistry.Rows[index].Cells[6].Value);
 
             ChangeStyleBoxes();
         }
@@ -1836,7 +1813,9 @@ namespace LogisticProgram
             dataGridViewFilter.Columns.AddRange(
                 new DataGridViewTextBoxColumn() { Name = "Column1", HeaderText = "Отгружено машин" },
                 new DataGridViewTextBoxColumn() { Name = "Column2", HeaderText = "Отгруженно, кг" },
-                new DataGridViewTextBoxColumn() { Name = "Column3", HeaderText = "Отгружено труб, шт" }
+                new DataGridViewTextBoxColumn() { Name = "Column3", HeaderText = "Отгружено труб, шт" },
+                new DataGridViewTextBoxColumn() { Name = "Column4", HeaderText = "Оплачено за траспорт, BYN" }
+
                 );
 
             int i = 0;
@@ -1853,6 +1832,8 @@ namespace LogisticProgram
                 dataGridViewFilter.Rows[i].Cells[2].Value = el[2];
                 i++;
             }
+            Requests requests = new Requests();
+            dataGridViewFilter.Rows[0].Cells[3].Value = requests.ConvertPrice(sql.GetTotalPrice());
         }
 
         private void buttonTotalRegistry_Click(object sender, EventArgs e)
