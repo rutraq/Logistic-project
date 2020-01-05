@@ -14,7 +14,14 @@ namespace LogisticProgram
         NpgsqlConnection conn = new NpgsqlConnection("Server=rajje.db.elephantsql.com;Port=5432;User Id=slihduor;Password=Z3kDd9k-Hzri0TsNeXOEKYkb7jo9wClC;Database=slihduor;");
         public List<int[]> GetTotalShipping()
         {
-            conn.Open();
+            try
+            {
+                conn.Open();
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                return null;
+            }
             NpgsqlCommand command = new NpgsqlCommand("select sum(\"Truck count\") as trucks, sum(shipping.\"Weight\") as weight, sum(\"Pipes count\") as pipes from Shipping", conn);
             NpgsqlDataReader reader = command.ExecuteReader();
 

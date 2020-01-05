@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ExcelFile = Microsoft.Office.Interop.Excel;
 
 namespace LogisticProgram
@@ -17,7 +18,7 @@ namespace LogisticProgram
             List<Shipping> shipping = telegram.Shipping;
             List<Registry> registry = telegram.registry;
 
-            string path = Directory.GetCurrentDirectory() + @"\" + "Save.xlsx";
+            string path = Application.StartupPath.ToString() + @"\" + "Save.xlsx";
             ExcelFile.Application excelapp = new ExcelFile.Application();
             ExcelFile.Workbook workbook = excelapp.Workbooks.Add();
             ExcelFile.Worksheet transportSheet = workbook.ActiveSheet;
@@ -209,7 +210,7 @@ namespace LogisticProgram
         public List<Transport> LoadFromExcelTransport()
         {
             List<Transport> transports = new List<Transport>();
-            string path = Directory.GetCurrentDirectory() + @"\" + "saveFromTelegram.xlsx";
+            string path = Application.StartupPath.ToString() + @"\" + "saveFromTelegram.xlsx";
             ExcelFile.Application excelapp = new ExcelFile.Application();
             ExcelFile.Workbook workbook = excelapp.Workbooks.Open(path, Type.Missing, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
             ExcelFile.Worksheet sheet = (ExcelFile.Worksheet)workbook.Sheets[3];
@@ -250,7 +251,7 @@ namespace LogisticProgram
         public List<Shipping> LoadFromExcelShipping()
         {
             List<Shipping> shippings = new List<Shipping>();
-            string path = Directory.GetCurrentDirectory() + @"\" + "saveFromTelegram.xlsx";
+            string path = Application.StartupPath.ToString() + @"\" + "saveFromTelegram.xlsx";
             ExcelFile.Application excelapp = new ExcelFile.Application();
             ExcelFile.Workbook workbook = excelapp.Workbooks.Open(path, Type.Missing, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
             ExcelFile.Worksheet sheet = (ExcelFile.Worksheet)workbook.Sheets[2];
@@ -290,7 +291,7 @@ namespace LogisticProgram
         public List<Registry> LoadFromExcelRegistry()
         {
             List<Registry> registries = new List<Registry>();
-            string path = Directory.GetCurrentDirectory() + @"\" + "saveFromTelegram.xlsx";
+            string path = Application.StartupPath.ToString() + @"\" + "saveFromTelegram.xlsx";
             ExcelFile.Application excelapp = new ExcelFile.Application();
             ExcelFile.Workbook workbook = excelapp.Workbooks.Open(path, Type.Missing, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
             ExcelFile.Worksheet sheet = (ExcelFile.Worksheet)workbook.Sheets[1];

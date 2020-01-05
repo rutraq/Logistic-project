@@ -6,7 +6,6 @@ using System.Data.Common;
 using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading;
 using Telegram.Bot.Args;
 using System.IO;
 
@@ -133,7 +132,6 @@ namespace LogisticProgram
                 telegram.registry = registry;
                 telegram.Transport = transport;
                 telegram.Shipping = shipping;
-
                 if (File.Exists("Save.xlsx"))
                 {
                     File.Delete("Save.xlsx");
@@ -423,6 +421,7 @@ namespace LogisticProgram
             {
                 if (dataGridViewRegistry.Top == 95)
                 {
+                    panelSearch.Top = 582;
                     dataGridViewShipping.Top = 380;
                     labelNameDataBase.Visible = true;
                     dataGridViewShipping.Enabled = false;
@@ -436,6 +435,7 @@ namespace LogisticProgram
         {
             if (dataGridViewRegistry.Top == 95)
             {
+                panelSearch.Top = 391;
                 dataGridViewShipping.Top = -520;
                 labelNameDataBase.Visible = false;
                 dataGridViewShipping.Enabled = true;
@@ -597,6 +597,7 @@ namespace LogisticProgram
                     else
                     {
                         check = false;
+                        errorProviderDate.SetError(textBoxShipping, "yyyy-mm-dd");
                     }
                 }
                 else
@@ -630,6 +631,7 @@ namespace LogisticProgram
                     else
                     {
                         check = false;
+                        errorProviderDate.SetError(textBoxShipped, "yyyy-mm-dd");
                     }
                 }
                 else
@@ -678,6 +680,7 @@ namespace LogisticProgram
                     else
                     {
                         check = false;
+                        errorProviderDate.SetError(textBoxDate, "yyyy-mm-dd");
                     }
                 }
                 else
@@ -901,7 +904,7 @@ namespace LogisticProgram
                 int pipeNumber = Convert.ToInt32(textBoxPipeNumber.Text);
                 int length = Convert.ToInt32(textBoxLength.Text);
                 int thickness = Convert.ToInt32(textBoxThickness.Text);
-                int weight = Convert.ToInt32(textBoxPipeWeight.Text);
+                int weight = Convert.ToInt32(0.02466 * thickness * (diameter - thickness) * length / 1000);
 
                 if (buttonMake.Text == "Добавить")
                 {
@@ -1056,6 +1059,7 @@ namespace LogisticProgram
             else
             {
                 panelShipping.BackColor = Color.FromArgb(62, 120, 138);
+                errorProviderDate.Clear();
             }
         }
 
@@ -1070,6 +1074,7 @@ namespace LogisticProgram
             else
             {
                 panelShipped.BackColor = Color.FromArgb(62, 120, 138);
+                errorProviderDate.Clear();
             }
         }
 
@@ -1385,6 +1390,7 @@ namespace LogisticProgram
             else
             {
                 panelDate.BackColor = Color.FromArgb(62, 120, 138);
+                errorProviderDate.Clear();
             }
         }
 
