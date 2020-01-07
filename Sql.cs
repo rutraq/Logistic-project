@@ -135,5 +135,29 @@ namespace LogisticProgram
 
             conn.Close();
         }
+        public List<int[]> GetTotalMonthsShipping()
+        {
+            conn.Open();
+            NpgsqlCommand command = new NpgsqlCommand("select extract(month from \"Date\") as month, sum(\"Truck count\") as trucks, sum(\"Weight\") as weight, sum(\"Pipes count\") as pipes from Shipping group by month", conn);
+            NpgsqlDataReader reader = command.ExecuteReader();
+            List<int[]> query = new List<int[]>();
+
+            if (reader.HasRows)
+            {
+                foreach (DbDataRecord record in reader)
+                {
+                    int[] read = {
+                        Convert.ToInt32(record["month"]),
+                        Convert.ToInt32(record["trucks"]),
+                        Convert.ToInt32(record["weight"]),
+                        Convert.ToInt32(record["pipes"])
+                    };
+                    query.Add(read);
+                }
+            }
+
+            conn.Close();
+            return query;
+        }
     }
 }

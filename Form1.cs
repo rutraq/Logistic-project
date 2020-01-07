@@ -2016,6 +2016,84 @@ namespace LogisticProgram
             }
         }
 
+        private void buttonTotalMonths_Click(object sender, EventArgs e)
+        {
+            List<int[]> answer = sql.GetTotalMonthsShipping();
+            dataGridViewFilter.Columns.Clear();
+            dataGridViewFilter.Columns.AddRange(
+                new DataGridViewTextBoxColumn() { Name = "Column", HeaderText = "Месяц" },
+                new DataGridViewTextBoxColumn() { Name = "Column1", HeaderText = "Отгружено машин" },
+                new DataGridViewTextBoxColumn() { Name = "Column2", HeaderText = "Отгруженно, кг" },
+                new DataGridViewTextBoxColumn() { Name = "Column3", HeaderText = "Отгружено труб, шт" }
+
+                );
+
+            int i = 0;
+
+            for (int j = 0; j < answer.Count - 1; j++)
+            {
+                dataGridViewFilter.Rows.Add();
+            }
+
+            foreach (var el in answer)
+            {
+                string month = "";
+                if (el[0] == 1)
+                {
+                    month = "Январь";
+                }
+                else if (el[0] == 2)
+                {
+                    month = "Февраль";
+                }
+                else if (el[0] == 3)
+                {
+                    month = "Март";
+                }
+                else if (el[0] == 4)
+                {
+                    month = "Апрель";
+                }
+                else if (el[0] == 5)
+                {
+                    month = "Май";
+                }
+                else if (el[0] == 6)
+                {
+                    month = "Июнь";
+                }
+                else if (el[0] == 7)
+                {
+                    month = "Июль";
+                }
+                else if (el[0] == 8)
+                {
+                    month = "Август";
+                }
+                else if (el[0] == 9)
+                {
+                    month = "Сентябрь";
+                }
+                else if (el[0] == 10)
+                {
+                    month = "Октябрь";
+                }
+                else if (el[0] == 11)
+                {
+                    month = "Ноябрь";
+                }
+                else
+                {
+                    month = "Декабрь";
+                }
+                dataGridViewFilter.Rows[i].Cells[0].Value = month;
+                dataGridViewFilter.Rows[i].Cells[1].Value = el[1];
+                dataGridViewFilter.Rows[i].Cells[2].Value = el[2];
+                dataGridViewFilter.Rows[i].Cells[3].Value = el[2];
+                i++;
+            }
+        }
+
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (File.Exists("Save.xlsx"))
